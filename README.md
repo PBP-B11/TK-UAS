@@ -20,7 +20,7 @@ Dewasa ini kondisi minyak bumi di Indonesia terus menurun. Menurut Badan Pusat S
 
 Sebagai salah satu negara tropis yang dilewati oleh garis khatulistiwa, Indonesia hanya memiliki 2 musim yaitu musim hujan dan musim kemarau. Hal itu juga yang membuat indonesia selalu disinari oleh matahari setiap harinya. Memanfaatkan keadaan tersebut, kita dapat mulai mengembangkan energi terbarukan dari sinar matahari sebagai pengganti listrik yang berkaitan dengan sustainable energy transition. Penggunaan panel surya sebagai pengganti listrik dirumah dapat membantu pemilik rumah untuk menghemat pemakaian listrik dari negara sehingga biaya yang harus dikeluarkan tiap bulannya lebih murah. Namun, beberapa kendala mulai bermunculan. Salah satunya, masih banyak orang mengira bahwa penggunaan panel surya sangatlah mahal dan masih merasa bingung mengenai informasi panggunaan panel surya. Oleh karena sebab itu, kami sebagai kelompok B-11 ingin membuat aplikasi bernama 'mypanel'. 
 
-# Penganalan Aplikasi 
+# Pengenalan Aplikasi 
 
 Aplikasi 'mypanel' bertujuan untuk memudahkan pengguna dalam mencari informasi mengenai penggunaan panel surya dan memperkirakan biaya yang akan dikeluarkan untuk memasang panel surya di rumah. MyPanel hadir dengan berbagai fitur yang disediakan oleh aplikasi ini, , antara lain :
   - Artikel Informatif
