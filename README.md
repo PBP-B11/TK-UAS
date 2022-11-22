@@ -37,3 +37,5 @@ Aplikasi 'mypanel' bertujuan untuk memudahkan pengguna dalam mencari informasi m
       Menyediakan laman daftar produk yang dapat dibeli 
   - Profile Pengguna
       Menyediakan laman edit profil pengguna
+  - Dua role pengguna
+      Terdapat role pengguna biasa dan technician
