@@ -24,18 +24,26 @@ Sebagai salah satu negara tropis yang dilewati oleh garis khatulistiwa, Indonesi
 
 Aplikasi 'mypanel' bertujuan untuk memudahkan pengguna dalam mencari informasi mengenai penggunaan panel surya dan memperkirakan biaya yang akan dikeluarkan untuk memasang panel surya di rumah. MyPanel hadir dengan berbagai fitur yang disediakan oleh aplikasi ini, , antara lain :
   - Artikel Informatif - Dikerjakan Oleh Muhammad Ruzain (2106750250)
+      
       Menyediakan informasi tentang pengguna panel surya
   - Kalkulator Panel Surya - Dikerjakan Oleh Rafi Madani (2106750856)
+      
       Memberikan perkiraan biaya yang akan dikeluarkan pengguna untuk memasang panel surya yang bergantung pada luas rumah dan energi yang ingin diberikan
   - Laman Pembelian - Dikerjakan oleh Erlangga Ahmad Khadafi (2106750894)
+      
       Menyediakan laman bagi calon pembeli untuk melakukan pemesanan produk yang dibutuhkan
   - Laman QNA - Dikerjakan oleh Muhammad Rifat Fadhillah (2106752470)
+      
       Pengguna dapat memanfaatkan laman ini untuk bertanya mengenai fitur maupun alur yang dirasa membingungkan
   - Testimoni Pengguna - Dikerjakan Oleh Dina Dwi Kinanty (2106651650)
+      
       Menyediakan laman testimoni oleh pengguna yang telah menggunakan layanan aplikasi ini dan telah menggunakan panel surya 
   - Daftar Produk    - Dikerjakan Oleh Erlangga Ahmad Khadafi (2106750894)
+      
       Menyediakan laman daftar produk yang dapat dibeli 
   - Profile Pengguna - Dikerjakan Oleh Rama Tridigdaya (2106638532)
+      
       Menyediakan laman edit profil pengguna
   - Dua role pengguna - Dikerjakan Bersama
+      
       Terdapat role pengguna biasa dan technician
