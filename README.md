@@ -22,7 +22,7 @@ Sebagai salah satu negara tropis yang dilewati oleh garis khatulistiwa, Indonesi
 
 # Pengenalan Aplikasi 
 
-Aplikasi 'mypanel' adalah aplikasi pertama di Indonesia yang berkecimpung di bidang tenaga surya. Dalam rangka memenuhi kebutuhan solar panel di Indonesia, my panel menjadi jembatan bagi masyarakat Indonesia  dalam mencari informasi mengenai penggunaan panel surya dan memperkirakan biaya yang akan dikeluarkan untuk memasang panel surya di rumah masing-masing. Pengguna bisa memanfaatkan fitur-fitur modern berikut yang disediakan oleh my panel, antara lain :
+Aplikasi 'mypanel' adalah aplikasi pertama di Indonesia yang berkecimpung di bidang tenaga surya. Dalam rangka memenuhi kebutuhan solar panel di Indonesia, my panel menjadi jembatan bagi masyarakat Indonesia  dalam mencari informasi mengenai penggunaan panel surya dan memperkirakan biaya yang akan dikeluarkan untuk memasang panel surya di rumah masing-masing. Ada dua peran pengguna pada aplikasi ini, yaitu customer and technician. Customer adalah pengguna yang ingin memesan pemasangan panel surya di rumah. Sedangkan, technician adalah pengguna yang menyediakan jasa tersebut. Pengguna bisa memanfaatkan fitur-fitur modern berikut yang disediakan oleh my panel, antara lain :
   - Artikel Informatif - Dikerjakan Oleh Muhammad Ruzain (2106750250)
       
       Menyediakan informasi tentang pengguna panel surya
