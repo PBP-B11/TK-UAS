@@ -3,7 +3,6 @@
 
 Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu Komputer Universitas Indonesia, Semester Ganjil 2022/2023
 
-*Read this in other languages: [Indonesian](README.md), [English](README.en.md)*
 Heroku app url : 
 
 created by : Kelompok PBP - B11
@@ -29,7 +28,7 @@ Aplikasi 'mypanel' bertujuan untuk memudahkan pengguna dalam mencari informasi m
   - Kalkulator Panel Surya 
       Memberikan perkiraan biaya yang akan dikeluarkan pengguna untuk memasang panel surya yang bergantung pada luas rumah dan energi yang ingin diberikan
   - Laman Pembelian 
-      Menyediakan laman bagi calon pembeli untuk melakukan checkout produk yang dibutuhkan
+      Menyediakan laman bagi calon pembeli untuk melakukan pemesanan produk yang dibutuhkan
   - Laman QNA
       Pengguna dapat memanfaatkan laman ini untuk bertanya mengenai fitur maupun alur yang dirasa membingungkan
   - Testimoni Pengguna 
