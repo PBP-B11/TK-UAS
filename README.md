@@ -46,6 +46,6 @@ Aplikasi 'mypanel' adalah aplikasi pertama di Indonesia yang berkecimpung di bid
       Menyediakan laman edit profil pengguna
 
 # Alur Webservice
-Semua modul flutter yang kami buat akan menggunakan API dan database json dari website proyek tengah semester yang sudah dibuat. Nantinya, app yang kami buat akan melakukan pengambilan data melalui GET dan pengiriman data melalui method POST atau PUT dengan endpoint yang sesuai ke website proyek tengah semester kami.
+Semua modul flutter yang kami buat akan menggunakan API dan database json dari website proyek tengah semester yang sudah dibuat. Nantinya, app yang kami buat akan melakukan pengambilan data melalui GET. Dengan memanfaatkan Form, kami juga akan melakukan pengiriman data melalui method POST atau PUT dengan endpoint yang sesuai ke website proyek tengah semester kami.
 
 
