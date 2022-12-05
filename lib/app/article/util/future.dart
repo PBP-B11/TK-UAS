@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:my_panel/app/article/model/article_model.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -6,8 +8,8 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<List<Article>> fetchArticle(String url) async {
-  var url = Uri.parse('url');
+Future<List<Article>> fetchArticle(String urlJson) async {
+  var url = Uri.parse(urlJson);
   var response = await http.get(
     url,
     headers: {
@@ -27,6 +29,53 @@ Future<List<Article>> fetchArticle(String url) async {
     }
   }
   return listArticle;
+}
+
+addArticle(String title, String articleUrl, String imageUrl) async {
+  try {
+    String url = 'http://localhost:8000/article/add-article/';
+    var respons = await http.post(
+      Uri.parse(url),
+      body: {
+        "title": title,
+        "url": articleUrl,
+        "gambar": imageUrl,
+      },
+    );
+    print("respons : " + respons.statusCode.toString());
+  } catch (e) {
+    print(e);
+  }
+}
+
+addLike(int id) async {
+  try {
+    String url = 'http://localhost:8000/article/add-like/${id}';
+    var respons = await http.post(Uri.parse(url));
+    print("respons : " + respons.statusCode.toString());
+  } catch (e) {
+    print(e);
+  }
+}
+
+approveArticle(int id) async {
+  try {
+    String url = 'http://localhost:8000/article/approve-article/${id}';
+    var respons = await http.post(Uri.parse(url));
+    print("respons : " + respons.statusCode.toString());
+  } catch (e) {
+    print(e);
+  }
+}
+
+deleteArticle(int id) async {
+  try {
+    String url = 'http://localhost:8000/article/delete-article/${id}';
+    var respons = await http.post(Uri.parse(url));
+    print("respons : " + respons.statusCode.toString());
+  } catch (e) {
+    print(e);
+  }
 }
 
 Future openUrlinApp({

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'page/login_page.dart';
 
 import 'util/drawer.dart';
 
@@ -12,13 +15,23 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
+        title: 'Flutter App',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+        ),
+        // home: const MyHomePage(),
+        initialRoute: "/login",
+        routes: {
+          "/login": (BuildContext context) => const LoginPage(),
+        },
+        debugShowCheckedModeBanner: false,
       ),
-      home: const MyHomePage(),
-      debugShowCheckedModeBanner: false,
     );
   }
 }
