@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 
 import '../app/calculator/page/calculator.dart';
-
 import '../app/product_list/page/product_list.dart';
-
 import '../app/cart/page/cart.dart';
-
 import '../app/testimony/page/testimony.dart';
-
 import '../app/qna/page/qna.dart';
-
 import '../app/article/page/article.dart';
-
 import '../app/profile/page/profile.dart';
-
 import '../main.dart';
+import '../page/login_page.dart';
+
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+
+import 'package:http/http.dart' as http;
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Drawer(
       child: Column(
         children: [
@@ -93,6 +93,20 @@ class MyDrawer extends StatelessWidget {
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => ArticlePage()),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text('Logout'),
+            onTap: () async {
+              Uri url = Uri.parse("http://localhost:8000/logout/");
+              await http.get(url);
+
+              // final response =
+              //     await request.logout("http://localhost:8000/logout/");
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => LoginPage()),
               );
             },
           )

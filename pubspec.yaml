@@ -39,6 +39,10 @@ dependencies:
   url_launcher: ^6.1.7
   carousel_slider: ^4.1.1
   http: ^0.13.5
+  intl: ^0.17.0
+  google_fonts: ^3.0.1
+  provider: ^6.0.4
+  pbp_django_auth: ^0.2.3
 
 dev_dependencies:
   flutter_test:
@@ -63,7 +67,6 @@ flutter:
   uses-material-design: true
   assets : 
     - lib/assets/images/
-    -
 
   # To add assets to your application, add an assets section, like this:
   # assets:
