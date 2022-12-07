@@ -41,6 +41,9 @@ class _LoginPageState extends State<LoginPage> {
           padding: const EdgeInsets.all(20.0),
           child: Column(
             children: [
+              Image.asset('lib/assets/images/logo.png',
+                  height: MediaQuery.of(context).size.height * 0.7 * 0.6,
+                  fit: BoxFit.contain),
               Text(
                 "Login",
                 style: TextStyle(fontSize: 22),
@@ -117,13 +120,18 @@ class _LoginPageState extends State<LoginPage> {
                     if (_loginFormKey.currentState!.validate()) {
                       // 'username' and 'password' should be the values of the user login form.
                       final response = await request
-                          .login("http://localhost:8000/auth/login", {
+                          .login("https://mypanel.up.railway.app/auth/login", {
                         'username': username,
                         'password': password1,
                       });
+                      request.cookies["is_technician"] =
+                          response["is_technician"].toString();
 
+                      print(
+                          'Teknisi : ' + response["is_technician"].toString());
                       if (request.loggedIn) {
                         // Code here will run if the login succeeded.
+                        _loginFormKey.currentState!.reset();
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
@@ -131,8 +139,44 @@ class _LoginPageState extends State<LoginPage> {
                         );
                       } else {
                         // Code here will run if the login failed (wrong username/password).
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return Dialog(
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
+                              ),
+                              elevation: 15,
+                              child: Container(
+                                child: ListView(
+                                  padding: const EdgeInsets.all(20),
+                                  shrinkWrap: true,
+                                  children: <Widget>[
+                                    SizedBox(height: 20),
+                                    Center(
+                                      child: Column(children: [
+                                        Text(response["message"],
+                                            textAlign: TextAlign.center,
+                                            style: TextStyle(fontSize: 16)),
+                                      ]),
+                                    ),
+                                    SizedBox(height: 20),
+                                    TextButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      child: Text(
+                                        'ok',
+                                        style: TextStyle(fontSize: 18),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                        );
                       }
-                      _loginFormKey.currentState!.reset();
                     }
                   },
                   child: const Text(
@@ -141,6 +185,23 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
+              SizedBox(
+                height: 15,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Don't have an account? ",
+                      style: TextStyle(fontSize: 16)),
+                  InkWell(
+                    child: Text(
+                      "Sign Up",
+                      style: TextStyle(color: Colors.blue, fontSize: 16),
+                    ),
+                    onTap: () {},
+                  )
+                ],
+              )
             ],
           ),
         ),

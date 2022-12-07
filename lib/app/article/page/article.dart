@@ -9,6 +9,9 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key});
 
@@ -17,10 +20,27 @@ class ArticlePage extends StatefulWidget {
 }
 
 class _ArticlePageState extends State<ArticlePage> {
-  String judulTombol = "My Article";
   double fontJudul = 22;
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
+    double lebarTombol;
+    String judulTombol;
+
+    if (request.cookies["is_technician"] == "true") {
+      lebarTombol = 150;
+      judulTombol = "Requested Article";
+    } else {
+      lebarTombol = 105;
+      judulTombol = "My Article";
+    }
+
+    void refresh() {
+      setState(() {});
+      print("Berhasil refresh halaman Article");
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Article'),
@@ -52,7 +72,7 @@ class _ArticlePageState extends State<ArticlePage> {
                             fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
                               builder: (context) => AddArticlePage()),
@@ -61,7 +81,7 @@ class _ArticlePageState extends State<ArticlePage> {
                     ),
                   ),
                   SizedBox(
-                    width: 105,
+                    width: lebarTombol,
                     height: 35,
                     child: TextButton(
                       style: ButtonStyle(
@@ -80,10 +100,11 @@ class _ArticlePageState extends State<ArticlePage> {
                             fontWeight: FontWeight.w500),
                       ),
                       onPressed: () {
-                        Navigator.pushReplacement(
+                        Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MyArticlePage()),
+                              builder: (context) =>
+                                  MyArticlePage(refresh: () => refresh())),
                         );
                       },
                     ),
@@ -107,7 +128,7 @@ class _ArticlePageState extends State<ArticlePage> {
                     fontSize: fontJudul,
                     fontWeight: FontWeight.w500,
                     height: 3)),
-            FutureArticleCard(jenis: "allArticle"),
+            FutureArticleCard(jenis: "allArticle", refresh: () => refresh()),
           ]),
         ),
       ),

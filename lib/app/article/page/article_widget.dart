@@ -1,7 +1,9 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:http/http.dart';
 import 'package:intl/intl.dart';
 
 import 'package:google_fonts/google_fonts.dart';
@@ -9,204 +11,50 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:my_panel/app/article/model/article_model.dart';
 import 'package:my_panel/app/article/util/future.dart';
 
-class ArticleCard extends StatefulWidget {
-  const ArticleCard({super.key, required this.article, required this.jenis});
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
-  final Article article;
-  final String jenis;
+class TombolLike extends StatefulWidget {
+  const TombolLike({super.key, required this.id});
+
+  final int id;
   @override
-  State<ArticleCard> createState() => _ArticleCardState();
+  State<TombolLike> createState() => _TombolLikeState();
 }
 
-class _ArticleCardState extends State<ArticleCard> {
+class _TombolLikeState extends State<TombolLike> {
   Color iconColor = Colors.grey;
   bool clicked = false;
 
   @override
   Widget build(BuildContext context) {
-    String formattedDate =
-        DateFormat('MMM d, yyyy').format(widget.article.fields.date);
-    var gambar = ClipRRect(
-      borderRadius: BorderRadius.circular(8),
-      child: Image.network(
-        widget.article.fields.gambar,
-        width: MediaQuery.of(context).size.width * 0.275,
-        height: MediaQuery.of(context).size.width * 0.25,
-        fit: BoxFit.cover,
-      ),
-    );
-
-    var teksDeskripsi1 = Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(
-            widget.article.fields.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-          Text(
-            formattedDate +
-                " Jumlah Like : " +
-                widget.article.fields.like.toString(),
-            style: GoogleFonts.plusJakartaSans(
-              fontSize: 13.0,
-              color: Colors.black54,
-            ),
-          ),
-        ],
-      ),
-    );
-
-    var teksDeskripsi2 = Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(
-            widget.article.fields.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                child: Text(
-                  "Submitted",
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 13.0,
-                    color: Colors.grey,
-                  ),
-                ),
-                onTap: () async {},
-              ),
-            ],
-          ),
-        ],
-      ),
-    );
-
-    var teksDeskripsi3 = Expanded(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        mainAxisSize: MainAxisSize.max,
-        children: <Widget>[
-          Text(
-            widget.article.fields.title,
-            maxLines: 2,
-            overflow: TextOverflow.ellipsis,
-            style: GoogleFonts.plusJakartaSans(
-              fontWeight: FontWeight.w500,
-              fontSize: 15,
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              InkWell(
-                child: Text(
-                  "Delete",
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 13.0,
-                    color: Colors.red[600],
-                  ),
-                ),
-                onTap: () async {
-                  deleteArticle(widget.article.pk);
-                },
-              ),
-              SizedBox(
-                width: 10,
-              ),
-              InkWell(
-                child: Text(
-                  "Approve",
-                  style: GoogleFonts.plusJakartaSans(
-                    fontSize: 13.0,
-                    color: Colors.green[500],
-                  ),
-                ),
-                onTap: () async {},
-              )
-            ],
-          ),
-        ],
-      ),
-    );
-
-    var tombolLike = Column(
+    return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         IconButton(
           color: iconColor,
           icon: Icon(Icons.favorite),
-          onPressed: () async {
+          onPressed: () {
             if (clicked) {
               return;
             }
             setState(() {
-              iconColor = Colors.red;
               clicked = true;
+              iconColor = Colors.red;
+              addLike(widget.id);
             });
-            addLike(widget.article.pk);
           },
         )
       ],
     );
-
-    var teksDeskripsi;
-    var iconLike;
-    if (widget.jenis == "allArticle") {
-      teksDeskripsi = teksDeskripsi1;
-      iconLike = tombolLike;
-    } else if (widget.jenis == "myArticle") {
-      teksDeskripsi = teksDeskripsi2;
-      iconLike = SizedBox();
-    } else {
-      teksDeskripsi = teksDeskripsi3;
-      iconLike = SizedBox();
-    }
-
-    return InkWell(
-      child: Container(
-        width: MediaQuery.of(context).size.width * .9,
-        height: 100,
-        margin: EdgeInsets.symmetric(vertical: 5),
-        padding: EdgeInsets.all(10),
-        decoration: BoxDecoration(
-            color: Colors.white, borderRadius: BorderRadius.circular(15.0)),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            gambar,
-            SizedBox(width: 10),
-            teksDeskripsi,
-            iconLike,
-          ],
-        ),
-      ),
-      onTap: () async {
-        openUrlinApp(url: widget.article.fields.url);
-      },
-    );
+    ;
   }
 }
 
 class FutureArticleCard extends StatefulWidget {
-  const FutureArticleCard({super.key, required this.jenis});
+  final Function refresh;
+  const FutureArticleCard(
+      {super.key, required this.jenis, required this.refresh});
 
   final String jenis;
   @override
@@ -216,18 +64,18 @@ class FutureArticleCard extends StatefulWidget {
 class _FutureArticleCardState extends State<FutureArticleCard> {
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
+
     String url = "http";
     if (widget.jenis == "allArticle") {
-      url = "http://localhost:8000/article/artikel-json/";
+      url = "https://mypanel.up.railway.app/article/artikel-json/";
     } else if (widget.jenis == "myArticle") {
-      url = "http://localhost:8000/article/artikel-json/";
-      // url = "http://localhost:8000/article/artikel-user-json/";
+      url = "https://mypanel.up.railway.app/article/artikel-user-json/";
     } else {
-      url = "http://localhost:8000/article/artikel-json/";
-      // url = "http://localhost:8000/article/artikel-submitted-json/";
+      url = "https://mypanel.up.railway.app/article/artikel-submitted-json/";
     }
     return FutureBuilder(
-        future: fetchArticle(url),
+        future: fetchArticle(context, url),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return const Center();
@@ -252,9 +100,281 @@ class _FutureArticleCardState extends State<FutureArticleCard> {
                   shrinkWrap: true,
                   itemCount: listArticle.length,
                   itemBuilder: (context, index) {
-                    Article article1 = listArticle[index];
+                    Article article = listArticle[index];
 
-                    return ArticleCard(article: article1, jenis: widget.jenis);
+                    try {
+                      Color iconColor = Colors.grey;
+                      bool clicked = false;
+                      final request = context.watch<CookieRequest>();
+                      String formattedDate =
+                          DateFormat('MMM d, yyyy').format(article.fields.date);
+                      var gambar = ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.network(
+                          article.fields.gambar,
+                          width: MediaQuery.of(context).size.width * 0.275,
+                          height: MediaQuery.of(context).size.width * 0.25,
+                          fit: BoxFit.cover,
+                        ),
+                      );
+
+                      var teksDeskripsi1 = Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Text(
+                              article.fields.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
+                            ),
+                            Text(
+                              formattedDate +
+                                  " Jumlah Like : " +
+                                  article.fields.like.toString(),
+                              style: GoogleFonts.plusJakartaSans(
+                                fontSize: 13.0,
+                                color: Colors.black54,
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+
+                      var teksDeskripsi2 = Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Text(
+                              article.fields.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Text(
+                                  article.fields.status
+                                      ? "Approved"
+                                      : "Submitted",
+                                  style: GoogleFonts.plusJakartaSans(
+                                    fontSize: 13.0,
+                                    color: article.fields.status
+                                        ? Colors.green
+                                        : Colors.grey,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+
+                      var teksDeskripsi3 = Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Text(
+                              article.fields.title,
+                              maxLines: 2,
+                              overflow: TextOverflow.ellipsis,
+                              style: GoogleFonts.plusJakartaSans(
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                InkWell(
+                                  child: Text(
+                                    "Delete",
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 13.0,
+                                      color: Colors.red[600],
+                                    ),
+                                  ),
+                                  onTap: () async {
+                                    await deleteArticle(article.pk);
+                                    widget.refresh();
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                InkWell(
+                                  child: Text(
+                                    "Approve",
+                                    style: GoogleFonts.plusJakartaSans(
+                                      fontSize: 13.0,
+                                      color: Colors.green[500],
+                                    ),
+                                  ),
+                                  onTap: () async {
+                                    await approveArticle(article.pk);
+
+                                    widget.refresh();
+                                  },
+                                )
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+
+                      var tombolLike = TombolLike(id: article.pk);
+
+                      var tombolDelete = Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            color: iconColor,
+                            icon: Icon(Icons.delete),
+                            onPressed: () async {
+                              bool delete = false;
+                              delete = await showDialog(
+                                context: context,
+                                builder: (context) {
+                                  return Dialog(
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    elevation: 15,
+                                    child: Container(
+                                      child: ListView(
+                                        padding: const EdgeInsets.all(20),
+                                        shrinkWrap: true,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            height: 100,
+                                            child: Icon(
+                                              Icons.warning_rounded,
+                                              color: Colors.amber[400],
+                                              size: 100,
+                                            ),
+                                          ),
+                                          SizedBox(
+                                            height: 5,
+                                          ),
+                                          Center(
+                                            child: Column(children: [
+                                              Text(
+                                                'Are you sure you want to delete this article?',
+                                                textAlign: TextAlign.center,
+                                                style: TextStyle(fontSize: 16),
+                                              ),
+                                            ]),
+                                          ),
+                                          SizedBox(height: 20),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              TextButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.grey),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context, false);
+                                                },
+                                                child: Text(
+                                                  'Cancel',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                              TextButton(
+                                                style: ButtonStyle(
+                                                  backgroundColor:
+                                                      MaterialStateProperty.all(
+                                                          Colors.red),
+                                                ),
+                                                onPressed: () {
+                                                  Navigator.pop(context, true);
+                                                },
+                                                child: Text(
+                                                  'Delete',
+                                                  style: TextStyle(
+                                                      color: Colors.white),
+                                                ),
+                                              ),
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  );
+                                },
+                              );
+                              if (delete) {
+                                await deleteArticle(article.pk);
+                                widget.refresh();
+                              }
+                              // addLike(article.pk);
+                            },
+                          )
+                        ],
+                      );
+
+                      var teksDeskripsi;
+                      var tombolArtikel;
+                      if (widget.jenis == "allArticle") {
+                        teksDeskripsi = teksDeskripsi1;
+                        tombolArtikel =
+                            request.cookies["is_technician"] == "true"
+                                ? tombolDelete
+                                : tombolLike;
+                      } else if (widget.jenis == "myArticle") {
+                        teksDeskripsi = teksDeskripsi2;
+                        tombolArtikel = SizedBox();
+                      } else {
+                        teksDeskripsi = teksDeskripsi3;
+                        tombolArtikel = SizedBox();
+                      }
+
+                      return InkWell(
+                        child: Container(
+                          width: MediaQuery.of(context).size.width * .9,
+                          height: 100,
+                          margin: EdgeInsets.symmetric(vertical: 5),
+                          padding: EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(15.0)),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              gambar,
+                              SizedBox(width: 10),
+                              teksDeskripsi,
+                              tombolArtikel,
+                            ],
+                          ),
+                        ),
+                        onTap: () async {
+                          openUrlinApp(url: article.fields.url);
+                        },
+                      );
+                    } catch (e) {
+                      return Container();
+                    }
+
+                    // return ArticleCard(article: article, jenis: widget.jenis);
                   },
                 ),
               );
@@ -335,8 +455,8 @@ class FutureArticleCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future:
-            fetchArticle("http://localhost:8000/article/artikel-populer-json/"),
+        future: fetchArticle(context,
+            "https://mypanel.up.railway.app/article/artikel-populer-json/"),
         builder: (context, AsyncSnapshot snapshot) {
           if (snapshot.data == null) {
             return const Center(child: CircularProgressIndicator());

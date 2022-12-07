@@ -99,7 +99,7 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             title: const Text('Logout'),
             onTap: () async {
-              Uri url = Uri.parse("http://localhost:8000/logout/");
+              Uri url = Uri.parse("https://mypanel.up.railway.app/logout/");
               await http.get(url);
 
               // final response =
@@ -109,7 +109,7 @@ class MyDrawer extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => LoginPage()),
               );
             },
-          )
+          ),
         ],
       ),
     );
