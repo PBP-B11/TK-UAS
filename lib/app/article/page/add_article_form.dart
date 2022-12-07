@@ -3,6 +3,9 @@ import 'package:my_panel/app/article/util/future.dart';
 import 'package:my_panel/main.dart';
 import 'package:my_panel/util/drawer.dart';
 
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
+
 class AddArticlePage extends StatefulWidget {
   const AddArticlePage({super.key});
 
@@ -18,6 +21,7 @@ class _AddArticlePageState extends State<AddArticlePage> {
 
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Article'),
@@ -130,9 +134,10 @@ class _AddArticlePageState extends State<AddArticlePage> {
                   style: ButtonStyle(
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                   ),
-                  onPressed: () {
+                  onPressed: () async {
+                    // Provider.of<CookieRequest>(context, listen: false);
                     if (_formKey.currentState!.validate()) {
-                      addArticle(_title, _articleUrl, _imageUrl);
+                      addArticle(context, _title, _articleUrl, _imageUrl);
 
                       showDialog(
                         context: context,
