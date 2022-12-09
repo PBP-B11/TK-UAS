@@ -197,7 +197,7 @@ class _LoginPageState extends State<LoginPage> {
                                     if (_loginFormKey.currentState!.validate()) {
                                       // 'username' and 'password' should be the values of the user login form.
                                       final response = await request.login(
-                                          "https://mypanel.up.railway.app/auth/login",
+                                          "https://mypanel.up.railway.app/auth/login/",
                                           {
                                             'username': _username,
                                             'password': _password1,
