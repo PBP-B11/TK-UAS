@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:my_panel/util/providers/user_provider.dart';
 
 class ArticlePage extends StatefulWidget {
   const ArticlePage({super.key});
@@ -23,12 +24,20 @@ class _ArticlePageState extends State<ArticlePage> {
   double fontJudul = 22;
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
-
     double lebarTombol;
     String judulTombol;
+    bool teknisi;
 
-    if (request.cookies["is_technician"] == "true") {
+    final user = context.watch<UserManagement>();
+    final penggunaLogin = user.userLoggedIn;
+
+    if (penggunaLogin != null) {
+      teknisi = penggunaLogin.isTechnician;
+    } else {
+      teknisi = false;
+    }
+
+    if (teknisi) {
       lebarTombol = 150;
       judulTombol = "Requested Article";
     } else {

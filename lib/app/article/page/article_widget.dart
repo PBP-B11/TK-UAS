@@ -13,6 +13,7 @@ import 'package:my_panel/app/article/util/future.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:my_panel/util/providers/user_provider.dart';
 
 class TombolLike extends StatefulWidget {
   const TombolLike({super.key, required this.id});
@@ -64,7 +65,15 @@ class FutureArticleCard extends StatefulWidget {
 class _FutureArticleCardState extends State<FutureArticleCard> {
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
+    final user = context.watch<UserManagement>();
+    final penggunaLogin = user.userLoggedIn;
+    bool teknisi;
+
+    if (penggunaLogin != null) {
+      teknisi = penggunaLogin.isTechnician;
+    } else {
+      teknisi = false;
+    }
 
     String url = "http";
     if (widget.jenis == "allArticle") {
@@ -105,7 +114,6 @@ class _FutureArticleCardState extends State<FutureArticleCard> {
                     try {
                       Color iconColor = Colors.grey;
                       bool clicked = false;
-                      final request = context.watch<CookieRequest>();
                       String formattedDate =
                           DateFormat('MMM d, yyyy').format(article.fields.date);
                       var gambar = ClipRRect(
@@ -335,10 +343,7 @@ class _FutureArticleCardState extends State<FutureArticleCard> {
                       var tombolArtikel;
                       if (widget.jenis == "allArticle") {
                         teksDeskripsi = teksDeskripsi1;
-                        tombolArtikel =
-                            request.cookies["is_technician"] == "true"
-                                ? tombolDelete
-                                : tombolLike;
+                        tombolArtikel = teknisi ? tombolDelete : tombolLike;
                       } else if (widget.jenis == "myArticle") {
                         teksDeskripsi = teksDeskripsi2;
                         tombolArtikel = SizedBox();

@@ -21,7 +21,6 @@ class _AddArticlePageState extends State<AddArticlePage> {
 
   @override
   Widget build(BuildContext context) {
-    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: Text('Add Article'),
@@ -135,7 +134,6 @@ class _AddArticlePageState extends State<AddArticlePage> {
                     backgroundColor: MaterialStateProperty.all(Colors.blue),
                   ),
                   onPressed: () async {
-                    // Provider.of<CookieRequest>(context, listen: false);
                     if (_formKey.currentState!.validate()) {
                       addArticle(context, _title, _articleUrl, _imageUrl);
 
