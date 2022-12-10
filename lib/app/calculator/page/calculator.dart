@@ -9,18 +9,24 @@ class CalculatorPage extends StatefulWidget {
   State<CalculatorPage> createState() => _CalculatorPageState();
 }
 
+
 class _CalculatorPageState extends State<CalculatorPage> {
   @override
   Widget build(BuildContext context) {
     final PageController controller = PageController();
     final _formKey = GlobalKey<FormState>();
+    var tagihan = 0;
+    var offset = 0;
+    var envfactor = 0;
+    var luas_atap = 0;
     return Scaffold(
       appBar: AppBar(
         title: Text('Calculator'),
       ),
       drawer: MyDrawer(),
       body: Form(
-      child: PageView(
+        key : _formKey,
+        child: PageView(
       /// [PageView.scrollDirection] defaults to [Axis.horizontal].
       /// Use [Axis.vertical] to scroll vertically.
       controller: controller,
@@ -43,7 +49,19 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   )),
-        ),
+              onChanged: (String ?value){
+                setState(() {
+                  tagihan = int.parse(value!)!;});},
+              onSaved: (String ?value){
+                setState(() {
+                  tagihan =  int.parse(value!)!;});},
+              validator: (String ?value){
+                if (value ==null || value.isEmpty){
+                  return "This field cannot be empty";
+                }
+                return null;
+              },
+            ),
           ),
         ),
       Center(
@@ -56,6 +74,18 @@ class _CalculatorPageState extends State<CalculatorPage> {
                 border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(5.0),
                 )),
+            onChanged: (String ?value){
+              setState(() {
+                offset = int.parse(value!)!;});},
+            onSaved: (String ?value){
+              setState(() {
+                offset = int.parse(value!)!;});},
+              validator: (String ?value){
+                if (value ==null || value.isEmpty){
+                  return "This field cannot be empty";
+                }
+                return null;
+              },
           ),
         ),
       ),
@@ -69,6 +99,18 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   )),
+              onChanged: (String ?value){
+                setState(() {
+                  envfactor = int.parse(value!)!;});},
+              onSaved: (String ?value){
+                setState(() {
+                  envfactor = int.parse(value!)!;});},
+                validator: (String ?value){
+                  if (value ==null || value.isEmpty){
+                    return "This field cannot be empty";
+                  }
+                  return null;
+                },
             ),
           ),
         ),
@@ -82,6 +124,18 @@ class _CalculatorPageState extends State<CalculatorPage> {
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(5.0),
                   )),
+              onChanged: (String ?value){
+                setState(() {
+                  luas_atap = int.parse(value!)!;});},
+              onSaved: (String ?value){
+                setState(() {
+                  luas_atap = int.parse(value!)!;});},
+                validator: (String ?value){
+                  if (value ==null || value.isEmpty){
+                    return "This field cannot be empty";
+                  }
+                  return null;
+                },
             ),
           ),
         ),
@@ -93,7 +147,9 @@ class _CalculatorPageState extends State<CalculatorPage> {
               const EdgeInsets.all(20.0),
             ),
           ),
-            onPressed:null ,
+            onPressed:()async{
+
+            },
             child: const Text(
               "Cek Hasil Kalkulasi Anda",
               style: TextStyle(color: Colors.white),
