@@ -62,7 +62,7 @@ class Fields {
   int panel;
   int requiredarea;
   bool isDoable;
-  DateTime date;
+  String date;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
     user: json["user"],
@@ -74,7 +74,7 @@ class Fields {
     panel: json["panel"],
     requiredarea: json["requiredarea"],
     isDoable: json["is_doable"],
-    date: DateTime.parse(json["date"]),
+    date: (json["date"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -87,7 +87,7 @@ class Fields {
     "panel": panel,
     "requiredarea": requiredarea,
     "is_doable": isDoable,
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+    "date": date,
   };
 }
 Future<List<Calculator>> fetchCalculator() async {
@@ -112,4 +112,33 @@ Future<List<Calculator>> fetchCalculator() async {
     }
   }
   return listCalculator;
+}
+Future<Calculator> createCalculator(
+    dynamic electricity, dynamic offset,
+    dynamic envfactor, dynamic sizeestimate,
+    dynamic roofarea, dynamic panel,
+    dynamic requiredarea, dynamic doable, dynamic date) async {
+  try{
+  final response = await http.post(
+    Uri.parse('https://mypanel.up.railway.app/calculator/show_json'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      "electricity": electricity,
+      "offset": offset,
+      "envfactor": envfactor,
+      "sizeestimate": sizeestimate,
+      "roofarea": roofarea,
+      "panel": panel,
+      "requiredarea": requiredarea,
+      "is_doable": doable,
+      "date": date,
+    }),
+  );
+  }catch(e){
+    print(e);
+  }
+
+
 }
