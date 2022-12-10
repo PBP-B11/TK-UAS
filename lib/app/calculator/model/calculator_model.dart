@@ -3,7 +3,14 @@
 //     final welcome = welcomeFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
+import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 List<Calculator> calculatorFromJson(String str) => List<Calculator>.from(json.decode(str).map((x) => Calculator.fromJson(x)));
 
 String calculatorToJson(List<Calculator> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -47,13 +54,13 @@ class Fields {
   });
 
   int user;
-  String electricity;
-  String offset;
-  String envfactor;
-  String sizeestimate;
-  String roofarea;
-  String panel;
-  String requiredarea;
+  int electricity;
+  int offset;
+  int envfactor;
+  int sizeestimate;
+  int roofarea;
+  int panel;
+  int requiredarea;
   bool isDoable;
   DateTime date;
 
@@ -82,4 +89,27 @@ class Fields {
     "is_doable": isDoable,
     "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
   };
+}
+Future<List<Calculator>> fetchCalculator() async {
+  var url = Uri.parse('https://mypanel.up.railway.app/calculator/show_json');
+  var response = await http.get(
+    url,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    },
+  );
+  if (response.statusCode != 200) {
+    throw Exception("Failed to load list.");
+  }
+  // melakukan decode response menjadi bentuk json
+  final data = jsonDecode(utf8.decode(response.bodyBytes));
+  // melakukan konversi data json menjadi object Article
+  List<Calculator> listCalculator = [];
+  for (var d in data) {
+    if (d != null) {
+      listCalculator.add(Calculator.fromJson(d));
+    }
+  }
+  return listCalculator;
 }
