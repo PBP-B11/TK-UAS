@@ -30,9 +30,6 @@ class Testimoni {
     };
 
     static Future<List<Testimoni>> fetchTestimoni() async {
-        //tanyain kalo mau get per-kategori gimana? masukin link-nya parameternya gimana
-        //buat dropdown-nya
-        //
         var url = Uri.parse('https://mypanel.up.railway.app/testimoni/flutter/json/'); 
         var response = await http.get(
             url,

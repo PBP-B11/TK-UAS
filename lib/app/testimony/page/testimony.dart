@@ -98,7 +98,7 @@ class _TestimonyPageState extends State<TestimonyPage> {
                                         ),
                                         const SizedBox(height: 15),
                                         Text(
-                                            "${snapshot.data![index].fields.discussion}",
+                                            "${snapshot.data![index].fields.description}",
                                             style: const TextStyle(
                                                 fontSize: 15.0,
                                                 fontWeight: FontWeight.normal,

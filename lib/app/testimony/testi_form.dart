@@ -14,7 +14,7 @@ class _AddState extends State<AddTesti> {
   final _formKey = GlobalKey<FormState>();
   final List<String> typeChoices = <String>['Very Good', 'Good', 'Mediocre', 'Bad', 'Very Bad'];
 
-  // form data (state)
+  
   String description = "";
   String rate = "Pilih Jenis";
   Future<void> submit(BuildContext context, String idUser) async{
@@ -125,7 +125,7 @@ class _AddState extends State<AddTesti> {
                             if (_formKey.currentState!.validate()) {
                               const AlertDialog(
                               title: Text("CONFRIRMATION"),
-                              content: Text("A DITAMBAHKAN"),
+                              content: Text("TESTIMONI HAS BEEN POSTED"),
                             );
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
