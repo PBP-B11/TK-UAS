@@ -96,6 +96,7 @@ class _TestimonyPageState extends State<TestimonyPage> {
                                                 color: Colors.grey,
                                             ),
                                         ),
+                                        
                                         const SizedBox(height: 15),
                                         Text(
                                             "${snapshot.data![index].fields.discussion}",
