@@ -42,7 +42,6 @@ class _MyArticlePageState extends State<MyArticlePage> {
       appBar: AppBar(
         title: Text(teknisi ? "Requested Article" : "My Article"),
       ),
-      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 12),

@@ -3,7 +3,14 @@
 //     final welcome = welcomeFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
+import 'package:http/http.dart' as http;
 
+import 'dart:convert';
+import 'package:url_launcher/url_launcher.dart';
+
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 List<Calculator> calculatorFromJson(String str) => List<Calculator>.from(json.decode(str).map((x) => Calculator.fromJson(x)));
 
 String calculatorToJson(List<Calculator> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
@@ -47,15 +54,15 @@ class Fields {
   });
 
   int user;
-  String electricity;
-  String offset;
-  String envfactor;
-  String sizeestimate;
-  String roofarea;
-  String panel;
-  String requiredarea;
+  int electricity;
+  int offset;
+  int envfactor;
+  int sizeestimate;
+  int roofarea;
+  int panel;
+  int requiredarea;
   bool isDoable;
-  DateTime date;
+  String date;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
     user: json["user"],
@@ -67,7 +74,7 @@ class Fields {
     panel: json["panel"],
     requiredarea: json["requiredarea"],
     isDoable: json["is_doable"],
-    date: DateTime.parse(json["date"]),
+    date: (json["date"]),
   );
 
   Map<String, dynamic> toJson() => {
@@ -80,6 +87,63 @@ class Fields {
     "panel": panel,
     "requiredarea": requiredarea,
     "is_doable": isDoable,
-    "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+    "date": date,
   };
+}
+Future<List<Calculator>> fetchCalculator() async {
+  var url = Uri.parse('https://mypanel.up.railway.app/calculator/show_json');
+  var response = await http.get(
+    url,
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Content-Type": "application/json",
+    },
+  );
+  if (response.statusCode != 200) {
+    throw Exception("Failed to load list.");
+  }
+  // melakukan decode response menjadi bentuk json
+  final data = jsonDecode(utf8.decode(response.bodyBytes));
+  // melakukan konversi data json menjadi object Article
+  List<Calculator> listCalculator = [];
+  for (var d in data) {
+    if (d != null) {
+      listCalculator.add(Calculator.fromJson(d));
+    }
+  }
+  return listCalculator;
+}
+Future<Calculator> createCalculator(
+    dynamic electricity, dynamic offset,
+    dynamic envfactor, dynamic sizeestimate,
+    dynamic roofarea, dynamic panel,
+    dynamic requiredarea, dynamic doable, dynamic date) async {
+  
+  final response = await http.post(
+    Uri.parse('https://mypanel.up.railway.app/calculator/show_json'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{
+      "electricity": electricity,
+      "offset": offset,
+      "envfactor": envfactor,
+      "sizeestimate": sizeestimate,
+      "roofarea": roofarea,
+      "panel": panel,
+      "requiredarea": requiredarea,
+      "is_doable": doable,
+      "date": date,
+    }),
+  );
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Calculator.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
+  }
 }

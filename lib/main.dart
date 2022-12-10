@@ -7,11 +7,11 @@ import 'app/authentication/pages/login_page.dart';
 import 'util/drawer.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const MyPanel());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class MyPanel extends StatelessWidget {
+  const MyPanel({super.key});
 
   // This widget is the root of your application.
   @override

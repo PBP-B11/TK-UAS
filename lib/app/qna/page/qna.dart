@@ -17,7 +17,6 @@ class _QnaPageState extends State<QnaPage> {
         title: Text('QNA'),
       ),
       body: Center(),
-      drawer: MyDrawer(),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
 
 import '../app/calculator/page/calculator.dart';
+import '../app/homepage/page/homepage.dart';
 import '../app/product_list/page/product_list.dart';
 import '../app/cart/page/cart.dart';
 import '../app/testimony/page/testimony.dart';
@@ -115,3 +116,4 @@ class MyDrawer extends StatelessWidget {
     );
   }
 }
+
