@@ -118,7 +118,7 @@ Future<Calculator> createCalculator(
     dynamic envfactor, dynamic sizeestimate,
     dynamic roofarea, dynamic panel,
     dynamic requiredarea, dynamic doable, dynamic date) async {
-  try{
+  
   final response = await http.post(
     Uri.parse('https://mypanel.up.railway.app/calculator/show_json'),
     headers: <String, String>{
@@ -136,9 +136,14 @@ Future<Calculator> createCalculator(
       "date": date,
     }),
   );
-  }catch(e){
-    print(e);
+
+  if (response.statusCode == 201) {
+    // If the server did return a 201 CREATED response,
+    // then parse the JSON.
+    return Calculator.fromJson(jsonDecode(response.body));
+  } else {
+    // If the server did not return a 201 CREATED response,
+    // then throw an exception.
+    throw Exception('Failed to create album.');
   }
-
-
 }
