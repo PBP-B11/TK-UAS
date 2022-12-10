@@ -10,6 +10,7 @@ import 'package:google_fonts/google_fonts.dart'; // font style
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:my_panel/util/providers/user_provider.dart';
 
 class MyArticlePage extends StatefulWidget {
   final Function refresh;
@@ -28,25 +29,30 @@ class _MyArticlePageState extends State<MyArticlePage> {
       print("Berhasil refresh halaman myArticle");
     }
 
-    final request = context.watch<CookieRequest>();
+    final user = context.watch<UserManagement>();
+    final penggunaLogin = user.userLoggedIn;
+    bool teknisi;
+
+    if (penggunaLogin != null) {
+      teknisi = penggunaLogin.isTechnician;
+    } else {
+      teknisi = false;
+    }
     return Scaffold(
       appBar: AppBar(
-        title: Text(request.cookies["is_technician"] == "true"
-            ? "Requested Article"
-            : "My Article"),
+        title: Text(teknisi ? "Requested Article" : "My Article"),
       ),
-      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 12),
           padding: EdgeInsets.symmetric(horizontal: 2),
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-            request.cookies["is_technician"] == "false"
+            teknisi
                 ? FutureArticleCard(
-                    jenis: "myArticle", refresh: () => refresh())
+                    jenis: "requestedArticle", refresh: () => refresh())
                 : FutureArticleCard(
-                    jenis: "requestedArticle", refresh: () => refresh()),
+                    jenis: "myArticle", refresh: () => refresh())
           ]),
         ),
       ),

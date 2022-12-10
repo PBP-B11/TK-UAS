@@ -13,11 +13,9 @@ class _ProductListPageState extends State<ProductListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Product List'),
+      body: SafeArea(
+        child: Text(""),
       ),
-      body: Center(),
-      drawer: MyDrawer(),
     );
   }
 }

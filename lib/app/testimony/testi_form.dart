@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:my_panel/util/drawer.dart';
-import 'package:my_panel/testimony/testi_model.dart';
+import 'package:my_panel/app/testimony/testi_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -12,25 +12,29 @@ class AddTesti extends StatefulWidget {
 
 class _AddState extends State<AddTesti> {
   final _formKey = GlobalKey<FormState>();
-  final List<String> typeChoices = <String>['Very Good', 'Good', 'Mediocre', 'Bad', 'Very Bad'];
+  final List<String> typeChoices = <String>[
+    'Very Good',
+    'Good',
+    'Mediocre',
+    'Bad',
+    'Very Bad'
+  ];
 
   
   String description = "";
   String rate = "Pilih Jenis";
-  Future<void> submit(BuildContext context, String idUser) async{
-        String id = idUser;
-        final response = await http.post(
-            Uri.parse('https://mypanel.up.railway.app/testimoni/add_testi/'+id),
-            headers: <String, String>{'Content-Type': 'application/json'},
-            body: jsonEncode(<String, dynamic>{
-                'title': rate,
-                'description': description,
-                'id': int.parse(id), 
-            })
-        );
-    }
-
-  @override
+  Future<void> submit(BuildContext context, String idUser) async {
+    String id = idUser;
+    final response = await http.post(
+        Uri.parse('https://mypanel.up.railway.app/testimoni/add_testi/' + id),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: jsonEncode(<String, dynamic>{
+          'title': rate,
+          'description': description,
+          'id': int.parse(id),
+        }));
+  }
+    @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -47,7 +51,6 @@ class _AddState extends State<AddTesti> {
                   child: Container(
                     padding: const EdgeInsets.all(20.0),
                     child: Column(children: <Widget>[
-                      
                       const Padding(
                         padding: EdgeInsets.only(
                             top: 20, bottom: 20, right: 50, left: 50),
@@ -85,14 +88,12 @@ class _AddState extends State<AddTesti> {
                           hintText: "Ex : Really love your idea",
                           labelText: "Description",
                           icon: const Icon(Icons.rate_review_rounded),
-                          
                           border: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(5.0),
                           ),
                         ),
-                        
                         onChanged: (String? value) {
-                           setState(() {
+                          setState(() {
                             description = value!;
                           });
                         },
@@ -111,7 +112,6 @@ class _AddState extends State<AddTesti> {
                       const Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 20),
                       ),
-                      
                       const Padding(
                         padding: EdgeInsets.only(top: 20, bottom: 20),
                       ),
@@ -135,7 +135,8 @@ class _AddState extends State<AddTesti> {
                           },
                           child: const Text(
                             'Save',
-                            style: TextStyle(color: Color.fromARGB(255, 255, 255, 255)),
+                            style: TextStyle(
+                                color: Color.fromARGB(255, 255, 255, 255)),
                           )),
                     ]),
                   ),

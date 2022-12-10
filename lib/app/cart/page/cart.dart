@@ -17,7 +17,6 @@ class _CartPageState extends State<CartPage> {
         title: Text('Cart'),
       ),
       body: Center(),
-      drawer: MyDrawer(),
     );
   }
 }
