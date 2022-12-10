@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
-
-import 'package:my_panel/app/article/util/future.dart';
 import 'package:my_panel/main.dart';
-import 'package:my_panel/util/drawer.dart';
+import 'package:my_panel/util/providers/user_provider.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
-import 'dart:io';
+import 'package:my_panel/app/authentication/models/customer.dart';
 
 import 'package:http/http.dart' as http;
 
@@ -36,6 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    final user = context.watch<UserManagement>();
     return Scaffold(
       backgroundColor: Colors.white,
       body: SafeArea(
@@ -202,10 +200,11 @@ class _LoginPageState extends State<LoginPage> {
                                             'username': _username,
                                             'password': _password1,
                                           });
-                                      print(response);
                                       if (request.loggedIn) {
                                         // Code here will run if the login succeeded.
                                         _loginFormKey.currentState!.reset();
+                                        var cust = Customer.fromJson(response["user"]);
+                                        user.setUser(cust);
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
