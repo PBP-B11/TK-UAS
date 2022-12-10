@@ -35,7 +35,6 @@ class _MyArticlePageState extends State<MyArticlePage> {
             ? "Requested Article"
             : "My Article"),
       ),
-      drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 12),

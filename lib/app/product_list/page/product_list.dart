@@ -17,7 +17,6 @@ class _ProductListPageState extends State<ProductListPage> {
         title: Text('Product List'),
       ),
       body: Center(),
-      drawer: MyDrawer(),
     );
   }
 }

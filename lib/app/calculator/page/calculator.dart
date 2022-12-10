@@ -17,7 +17,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
         title: Text('Calculator'),
       ),
       body: Center(),
-      drawer: MyDrawer(),
     );
   }
 }

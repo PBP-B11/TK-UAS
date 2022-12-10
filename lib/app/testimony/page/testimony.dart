@@ -17,7 +17,6 @@ class _TestimonyPageState extends State<TestimonyPage> {
         title: Text('Testimony'),
       ),
       body: Center(),
-      drawer: MyDrawer(),
     );
   }
 }
