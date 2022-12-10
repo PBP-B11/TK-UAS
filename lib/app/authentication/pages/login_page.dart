@@ -239,7 +239,7 @@ class _LoginPageState extends State<LoginPage> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const MyHomePage()),
+                                                  const MyPanel()),
                                         );
                                       } else {
                                         // Code here will run if the login failed (wrong username/password).
