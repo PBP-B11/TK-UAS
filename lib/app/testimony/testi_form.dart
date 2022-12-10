@@ -125,8 +125,8 @@ class _AddState extends State<AddTesti> {
                           onPressed: () async{
                             if (_formKey.currentState!.validate()) {
                               const AlertDialog(
-                              title: Text("POST BERHASIL"),
-                              content: Text("FAQ DITAMBAHKAN"),
+                              title: Text("CONFRIRMATION"),
+                              content: Text("A DITAMBAHKAN"),
                             );
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
