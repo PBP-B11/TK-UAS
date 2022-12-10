@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-
+import 'package:my_panel/app/article/util/future.dart';
+import 'package:my_panel/app/calculator/model/calculator_model.dart';
 import 'package:my_panel/util/drawer.dart';
 
 class CalculatorForm extends StatefulWidget {
@@ -11,6 +12,16 @@ class CalculatorForm extends StatefulWidget {
 
 class _CalculatorFormState extends State<CalculatorForm> {
   @override
+  String? numberValidator(String? value) {
+    if(value == null) {
+      return "This field cannot be empty";
+    }
+    final n = num.tryParse(value);
+    if(n == null) {
+      return '"$value" is not a valid number';
+    }
+    return null;
+  }
   final _formKey = GlobalKey<FormState>();
   var tagihan = 0;
   var offset = 0;
@@ -29,6 +40,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
       child: Column(
         children: [
           TextFormField(
+            keyboardType: TextInputType.number,
           decoration: InputDecoration(
               labelText: "Tagihan Listrik Selama 1 Tahun (KWH)",
               border: OutlineInputBorder(
@@ -36,16 +48,16 @@ class _CalculatorFormState extends State<CalculatorForm> {
               )),
           onChanged: (String? value){
             setState(() {
-              tagihan = int.parse(value!)!;});},
+              tagihan = int.parse(value!);});},
           onSaved: (String? value){
             setState(() {
-              tagihan =  int.parse(value!)!;});},
-          validator: (String? value){
-            if (value == null || value.isEmpty){
-              return "This field cannot be empty";
-            }
-            return null;
-          },
+              tagihan =  int.parse(value!);});},
+            validator: (String? value){
+              if (value ==null || value.isEmpty){
+                return "This field cannot be empty";
+              }
+              return null;
+            },
         ),
           TextFormField(
             keyboardType: TextInputType.number,
@@ -61,7 +73,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
               setState(() {
                 offset = int.parse(value!)!;});},
             validator: (String? value){
-              if (value ==null || value==0){
+              if (value ==null || value.isEmpty){
                 return "This field cannot be empty";
               }
               return null;
@@ -115,15 +127,17 @@ class _CalculatorFormState extends State<CalculatorForm> {
               ),
             ),
             onPressed:()async{
-              var solar_array_output = (tagihan)/(365*solar_hours);
-              var solar_array_size = solar_array_output * ((offset/100)/(envfactor/100));
-              var required_panel = (solar_array_size*1000)/300;
-              var required_area = (required_panel*1.4).ceil();
-              if (required_area>luas_atap){
-                doable = false;
-              }
               if (_formKey.currentState!.validate()){
-
+                var solar_array_output = (tagihan)/(365*solar_hours);
+                var solar_array_size = solar_array_output * ((offset/100)/(envfactor/100));
+                var required_panel = (solar_array_size*1000)/300;
+                var required_area = (required_panel*1.4).ceil();
+                if (required_area>luas_atap){
+                  doable = false;
+                }
+                DateTime dateToday =new DateTime.now();
+                String date = dateToday.toString().substring(0,10);
+                createCalculator(tagihan, offset, envfactor, solar_array_size, luas_atap, required_panel, required_area, doable, date);
               }
 
             },
