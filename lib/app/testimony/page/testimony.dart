@@ -17,7 +17,7 @@ class _TestimonyPageState extends State<TestimonyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Testimony'),
+        title: Text('Testimoni'),
       ),
       body: Center(),
       drawer: MyDrawer(),

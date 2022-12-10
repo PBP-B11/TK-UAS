@@ -15,7 +15,6 @@ class _AddState extends State<AddTesti> {
   final List<String> typeChoices = <String>['Very Good', 'Good', 'Mediocre', 'Bad', 'Very Bad'];
 
   // form data (state)
-  String customer = "";
   String description = "";
   String rate = "Pilih Jenis";
   Future<void> submit(BuildContext context, String idUser) async{
