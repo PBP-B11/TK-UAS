@@ -121,13 +121,12 @@ class _AddState extends State<AddTesti> {
                             backgroundColor:
                                 MaterialStateProperty.all(Colors.blue),
                           ),
-                          onPressed: () {
+                          onPressed: () async{
                             if (_formKey.currentState!.validate()) {
-                              ListTesti.data.add(TambahTesti(
-                                customer: customer,
-                                description: description,
-                                rate: rate,
-                              ));
+                              const AlertDialog(
+                              title: Text("POST BERHASIL"),
+                              content: Text("FAQ DITAMBAHKAN"),
+                            );
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text(
