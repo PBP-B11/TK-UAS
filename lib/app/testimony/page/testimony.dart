@@ -17,27 +17,28 @@ class _TestimonyPageState extends State<TestimonyPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Testimony'),
+        title: Text('Testimoni'),
       ),
       body: FutureBuilder(
-          future: Testimoni.fetchTestimoni(),
-          builder: (context, AsyncSnapshot snapshot) {
-            if (snapshot.data == null) {
-              return const Center(child: CircularProgressIndicator());
-            } else {
-              if (!snapshot.hasData) {
-                return Column(
-                  children: const [
-                    Text(
-                      "There is no Testimoni",
-                      style: TextStyle(
-                          color: Color.fromARGB(255, 245, 72, 72),
-                          fontSize: 20),
-                    ),
-                    SizedBox(height: 10),
-                  ],
-                );
-              } else {
+        future: Testimoni.fetchTestimoni(),
+        builder: (context, AsyncSnapshot snapshot){
+            if (snapshot.data == null){
+                return const Center(child: CircularProgressIndicator());
+            } else{
+                if(!snapshot.hasData){
+                    return Column(
+                        children: const [
+                            Text(
+                                "There is no Testimoni",
+                                style: TextStyle(
+                                    color: Color.fromARGB(255, 245, 72, 72),
+                                    fontSize: 20
+                                ),
+                            ),
+                            SizedBox(height: 10),
+                        ],
+                    );
+                } else {
                 return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (_, index) => InkWell(
@@ -75,7 +76,7 @@ class _TestimonyPageState extends State<TestimonyPage> {
                                 ),
                                 const SizedBox(height: 15),
                                 Text(
-                                  "${snapshot.data![index].fields.discussion}",
+                                  "${snapshot.data![index].fields.description}",
                                   style: const TextStyle(
                                     fontSize: 15.0,
                                     fontWeight: FontWeight.normal,
