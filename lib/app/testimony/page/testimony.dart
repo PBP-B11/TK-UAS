@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/app/testimony/testi_model.dart';
-import 'package:my_panel/app/testimony/test_form.dart';
+import 'package:my_panel/app/testimony/testi_form.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
@@ -19,29 +19,6 @@ class _TestimonyPageState extends State<TestimonyPage> {
       appBar: AppBar(
         title: Text('Testimony'),
       ),
-      body: Center(),
-      drawer: MyDrawer(),
-      floatingActionButton: Padding(
-        padding : const EdgeInsets.fromLTRB(50,10,10,10),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: <Widget>[
-            Align(
-                alignment: Alignment.bottomCenter,
-                child: FloatingActionButton.extended(
-                    onPressed: () => Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => AddTesti()
-                      ),
-                    ),
-                label: const Text('Add Testimoni'),
-                icon: const Icon(Icons.add),
-                ),
-            ),
-          ],
-        )),
-        
       body: FutureBuilder(
           future: Testimoni.fetchTestimoni(),
           builder: (context, AsyncSnapshot snapshot) {
