@@ -19,6 +19,29 @@ class _TestimonyPageState extends State<TestimonyPage> {
       appBar: AppBar(
         title: Text('Testimony'),
       ),
+      body: Center(),
+      drawer: MyDrawer(),
+      floatingActionButton: Padding(
+        padding : const EdgeInsets.fromLTRB(50,10,10,10),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: <Widget>[
+            Align(
+                alignment: Alignment.bottomCenter,
+                child: FloatingActionButton.extended(
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => AddTesti()
+                      ),
+                    ),
+                label: const Text('Add Testimoni'),
+                icon: const Icon(Icons.add),
+                ),
+            ),
+          ],
+        )),
+        
       body: FutureBuilder(
           future: Testimoni.fetchTestimoni(),
           builder: (context, AsyncSnapshot snapshot) {
