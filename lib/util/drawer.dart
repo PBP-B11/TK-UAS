@@ -9,7 +9,7 @@ import '../app/article/page/article.dart';
 import '../app/profile/page/profile.dart';
 import '../main.dart';
 import '../page/login_page.dart';
-
+import '../app/testimony/page/testimony.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 
@@ -96,6 +96,7 @@ class MyDrawer extends StatelessWidget {
               );
             },
           ),
+          
           ListTile(
             title: const Text('Logout'),
             onTap: () async {
@@ -110,6 +111,7 @@ class MyDrawer extends StatelessWidget {
               );
             },
           ),
+          
         ],
       ),
     );
