@@ -26,7 +26,12 @@ class _CalculatorPageState extends State<CalculatorPage> {
       controller: controller,
       children: <Widget>[
         Center(
-          child: Text('According to the U.S. Energy Information Administration, the average household uses around 893 kilowatt-hours (kWh) per month. A residential solar setup produces anywhere from 350 to 850 kWh per month. Therefore, you can save as much as 95% off your utility bill.'),
+          child: Column(
+            children :[ Image.asset('lib/assets/images/kalkulator1.png',
+              height: MediaQuery.of(context).size.height / 2,),
+              Text('According to the U.S. Energy Information Administration, the average household uses around 893 kilowatt-hours (kWh) per month. A residential solar setup produces anywhere from 350 to 850 kWh per month. Therefore, you can save as much as 95% off your utility bill.')
+        ],
+          ),
         ),
         Center(
           child:  Padding(
