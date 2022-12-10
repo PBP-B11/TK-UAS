@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:my_panel/util/providers/user_provider.dart';
+
 import '../app/calculator/page/calculator.dart';
 import '../app/product_list/page/product_list.dart';
 import '../app/cart/page/cart.dart';
@@ -7,10 +9,11 @@ import '../app/qna/page/qna.dart';
 import '../app/article/page/article.dart';
 import '../app/profile/page/profile.dart';
 import '../main.dart';
-import '../page/login_page.dart';
-import '../app/testimony/page/testimony.dart';
+import '../app/authentication/pages/login_page.dart';
+
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+
 import 'package:http/http.dart' as http;
 
 class MyDrawer extends StatelessWidget {
@@ -19,6 +22,7 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final request = context.watch<CookieRequest>();
+    final user = context.watch<UserManagement>();
     return Drawer(
       child: Column(
         children: [
@@ -94,24 +98,21 @@ class MyDrawer extends StatelessWidget {
               );
             },
           ),
-          
           ListTile(
             title: const Text('Logout'),
             onTap: () async {
               Uri url = Uri.parse("https://mypanel.up.railway.app/logout/");
               await http.get(url);
-
-              // final response =
-              //     await request.logout("http://localhost:8000/logout/");
+              user.removeUser();
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(builder: (context) => LoginPage()),
               );
             },
           ),
-          
         ],
       ),
     );
   }
 }
+
