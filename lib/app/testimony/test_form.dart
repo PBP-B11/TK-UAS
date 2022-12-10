@@ -124,17 +124,17 @@ class _AddState extends State<AddTesti> {
                                 MaterialStateProperty.all(Colors.blue),
                           ),
                           onPressed: () {
-                            if (_formKey.currentState!.validate()) {
-                              Testimoni.listTestimoni.add(TambahTesti(
-                                customer: customer,
-                                description: description,
-                                rate: rate,
-                              ));
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          'Thank you for your response!')));
-                            }
+                            // if (_formKey.currentState!.validate()) {
+                            //   Testimoni.listTestimoni.add(TambahTesti(
+                            //     customer: customer,
+                            //     description: description,
+                            //     rate: rate,
+                            //   ));
+                            //   ScaffoldMessenger.of(context).showSnackBar(
+                            //       const SnackBar(
+                            //           content: Text(
+                            //               'Thank you for your response!')));
+                            // }
                           },
                           child: const Text(
                             'Save',

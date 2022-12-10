@@ -34,7 +34,7 @@ class MyDrawer extends StatelessWidget {
               // Route menu ke halaman utama
               Navigator.pushReplacement(
                 context,
-                MaterialPageRoute(builder: (context) => const MyPanel()),
+                MaterialPageRoute(builder: (context) => const MyHomePage()),
               );
             },
           ),
