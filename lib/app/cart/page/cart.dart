@@ -19,15 +19,15 @@ class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
     final user = context.watch<UserManagement>();
-    //final request = context.watch<CookieRequest>();
+    final request = context.watch<CookieRequest>();
     //final response = request.get('http://10.0.2.2:8000/cart/get_cart/');
-    //final response = request.get('https://mypanel.up.railway.app/cart/get_cart/');
+    final response = request.get('https://mypanel.up.railway.app/cart/get_cart/');
     return SafeArea(
       child: Scaffold(
         appBar: CustomAppBar(),
         body: SingleChildScrollView(
           child: FutureBuilder(
-              future: fetchCart(context),
+              future: response,
               builder: (context, AsyncSnapshot snapshot) {
                 print("==== future builder call ====");
                 print(snapshot.data);
@@ -83,7 +83,7 @@ class _CartPageState extends State<CartPage> {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(4.0),
-                                          child: Text(snapshot.data[index].fields.product.name,
+                                          child: Text(snapshot.data[index]["fields"]["product"]["name"],
                                             style: const TextStyle(
                                               fontSize: 16,
                                             ),
@@ -91,7 +91,7 @@ class _CartPageState extends State<CartPage> {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(4.0),
-                                          child: Text("Rp${snapshot.data[index].fields.product.price}",
+                                          child: Text("Rp${snapshot.data[index]["fields"]["product"]["price"]}",
                                             style: const TextStyle(
                                               fontSize: 16,
                                               fontWeight: FontWeight.bold,
@@ -107,7 +107,7 @@ class _CartPageState extends State<CartPage> {
                                 crossAxisAlignment: CrossAxisAlignment.end,
                                 mainAxisAlignment: MainAxisAlignment.end,
                                 children: [
-                                  Text(snapshot.data[index].fields.quantity.toString()),
+                                  Text(snapshot.data[index]["fields"]["quantity"].toString()),
                                 ],
                               ),
                             ],

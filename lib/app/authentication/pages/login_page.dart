@@ -42,7 +42,7 @@ class _LoginPageState extends State<LoginPage> {
         child: SingleChildScrollView(
           child: Container(
             alignment: Alignment.center,
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
@@ -64,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 Container(
-                  padding: EdgeInsets.all(10),
+                  padding: const EdgeInsets.all(10),
                   alignment: Alignment.centerLeft,
                   child: Padding(
                     padding: const EdgeInsets.all(15.0),
@@ -90,10 +90,10 @@ class _LoginPageState extends State<LoginPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Padding(
+                                    const Padding(
                                       padding:
-                                          const EdgeInsets.only(right: 10.0),
-                                      child: const Icon(
+                                          EdgeInsets.only(right: 10.0),
+                                      child: Icon(
                                         Icons.person,
                                         size: 32,
                                         color: Colors.grey,
@@ -258,23 +258,23 @@ class _LoginPageState extends State<LoginPage> {
                                                       const EdgeInsets.all(20),
                                                   shrinkWrap: true,
                                                   children: <Widget>[
-                                                    SizedBox(height: 20),
+                                                    const SizedBox(height: 20),
                                                     Center(
                                                       child: Column(children: [
                                                         Text(
                                                             response["message"],
                                                             textAlign: TextAlign
                                                                 .center,
-                                                            style: TextStyle(
+                                                            style: const TextStyle(
                                                                 fontSize: 16)),
                                                       ]),
                                                     ),
-                                                    SizedBox(height: 20),
+                                                    const SizedBox(height: 20),
                                                     TextButton(
                                                       onPressed: () {
                                                         Navigator.pop(context);
                                                       },
-                                                      child: Text(
+                                                      child: const Text(
                                                         'ok',
                                                         style: TextStyle(
                                                             fontSize: 18),
@@ -292,10 +292,10 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
 
-                              Padding(
+                              const Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 25, bottom: 35),
-                                child: const Text(
+                                    EdgeInsets.only(top: 25, bottom: 35),
+                                child: Text(
                                   "OR",
                                   style: TextStyle(
                                     fontSize: 16,
@@ -315,7 +315,7 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   TextButton(
                                       onPressed: () {},
-                                      child: Text(
+                                      child: const Text(
                                         "Register",
                                         style: TextStyle(
                                           fontSize: 16,
