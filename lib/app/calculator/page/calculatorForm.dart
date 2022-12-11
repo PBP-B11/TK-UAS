@@ -2,7 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:my_panel/app/article/util/future.dart';
 import 'package:my_panel/app/calculator/model/calculator_model.dart';
 import 'package:my_panel/util/drawer.dart';
-
+import 'package:my_panel/util/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 class CalculatorForm extends StatefulWidget {
   const CalculatorForm({super.key});
 
@@ -128,16 +129,17 @@ class _CalculatorFormState extends State<CalculatorForm> {
             ),
             onPressed:()async{
               if (_formKey.currentState!.validate()){
-                var solar_array_output = (tagihan)/(365*solar_hours);
-                var solar_array_size = solar_array_output * ((offset/100)/(envfactor/100));
-                var required_panel = (solar_array_size*1000)/300;
-                var required_area = (required_panel*1.4).ceil();
+                var user = context.watch<UserManagement>();
+                var solar_array_output = ((tagihan)/(365*solar_hours)).ceil();
+                var solar_array_size = (solar_array_output * ((offset/100)/(envfactor/100))).ceil();
+                var required_panel = ((solar_array_size*1000)/300).ceil();
+                var required_area = ((required_panel*1.4).ceil()).ceil();
                 if (required_area>luas_atap){
                   doable = false;
                 }
                 DateTime dateToday =new DateTime.now();
                 String date = dateToday.toString().substring(0,10);
-                createCalculator(tagihan, offset, envfactor, solar_array_size, luas_atap, required_panel, required_area, doable, date);
+                createCalculator(context, user.userLoggedIn,tagihan, offset, envfactor, solar_array_size, luas_atap, required_panel, required_area, doable, date);
               }
 
             },
