@@ -11,9 +11,12 @@ import 'package:url_launcher/url_launcher.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-List<Calculator> calculatorFromJson(String str) => List<Calculator>.from(json.decode(str).map((x) => Calculator.fromJson(x)));
 
-String calculatorToJson(List<Calculator> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+List<Calculator> calculatorFromJson(String str) =>
+    List<Calculator>.from(json.decode(str).map((x) => Calculator.fromJson(x)));
+
+String calculatorToJson(List<Calculator> data) =>
+    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Calculator {
   Calculator({
@@ -27,16 +30,16 @@ class Calculator {
   Fields fields;
 
   factory Calculator.fromJson(Map<String, dynamic> json) => Calculator(
-    model: json["model"],
-    pk: json["pk"],
-    fields: Fields.fromJson(json["fields"]),
-  );
+        model: json["model"],
+        pk: json["pk"],
+        fields: Fields.fromJson(json["fields"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "model": model,
-    "pk": pk,
-    "fields": fields.toJson(),
-  };
+        "model": model,
+        "pk": pk,
+        "fields": fields.toJson(),
+      };
 }
 
 class Fields {
@@ -65,32 +68,34 @@ class Fields {
   dynamic date;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-    user: json["user"],
-    electricity: json["electricity"],
-    offset: json["offset"],
-    envfactor: json["envfactor"],
-    sizeestimate: json["sizeestimate"],
-    roofarea: json["roofarea"],
-    panel: json["panel"],
-    requiredarea: json["requiredarea"],
-    isDoable: json["is_doable"],
-    date: (json["date"]),
-  );
+        user: json["user"],
+        electricity: json["electricity"],
+        offset: json["offset"],
+        envfactor: json["envfactor"],
+        sizeestimate: json["sizeestimate"],
+        roofarea: json["roofarea"],
+        panel: json["panel"],
+        requiredarea: json["requiredarea"],
+        isDoable: json["is_doable"],
+        date: (json["date"]),
+      );
 
   Map<String, dynamic> toJson() => {
-    "user": user,
-    "electricity": electricity,
-    "offset": offset,
-    "envfactor": envfactor,
-    "sizeestimate": sizeestimate,
-    "roofarea": roofarea,
-    "panel": panel,
-    "requiredarea": requiredarea,
-    "is_doable": isDoable,
-    "date": date,
-  };
+        "user": user,
+        "electricity": electricity,
+        "offset": offset,
+        "envfactor": envfactor,
+        "sizeestimate": sizeestimate,
+        "roofarea": roofarea,
+        "panel": panel,
+        "requiredarea": requiredarea,
+        "is_doable": isDoable,
+        "date": date,
+      };
 }
-Future<List<Calculator>> fetchCalculator(BuildContext context) async { //fetch no problemo
+
+Future<List<Calculator>> fetchCalculator(BuildContext context) async {
+  //fetch no problemo
   final request = context.read<CookieRequest>();
   var url = Uri.parse('https://mypanel.up.railway.app/calculator/show_json');
   var response = await http.get(
@@ -112,35 +117,51 @@ Future<List<Calculator>> fetchCalculator(BuildContext context) async { //fetch n
   }
   return listCalculator;
 }
-Future<dynamic> createCalculator( BuildContext context, dynamic user, //kamu kenapa suka 403 sih aneh
-    dynamic electricity, dynamic offset,
-    dynamic envfactor, dynamic sizeestimate,
-    dynamic roofarea, dynamic panel,
-    dynamic requiredarea, dynamic doable, dynamic date) async {
 
+Future<dynamic> createCalculator(
+    BuildContext context,
+    dynamic user, //kamu kenapa suka 403 sih aneh
+    dynamic electricity,
+    dynamic offset,
+    dynamic envfactor,
+    dynamic sizeestimate,
+    dynamic roofarea,
+    dynamic panel,
+    dynamic requiredarea,
+    dynamic doable,
+    dynamic date) async {
   final request = context.read<CookieRequest>();
-  try{
-  var response = await http.post(
-    Uri.parse('https://mypanel.up.railway.app/calculator/show_json'),
-    headers: request.headers,
-    body: jsonEncode(<String, dynamic>{
-      "user" : user,
-      "electricity": electricity,
-      "offset": offset,
-      "envfactor": envfactor,
-      "sizeestimate": sizeestimate,
-      "roofarea": roofarea,
-      "panel": panel,
-      "requiredarea": requiredarea,
-      "is_doable": doable,
-      "date": date,
-    },
-    )
-  );
-  print("respons addcalcu : " + response.statusCode.toString());
-      }catch(e){
+  try {
+    var response = await http.post(
+      Uri.parse('https://mypanel.up.railway.app/calculator/add'),
+      headers: request.headers,
+      body: {
+        // "user": user,
+        "electricity": electricity.toString(),
+        "offset": offset.toString(),
+        "envfactor": envfactor.toString(),
+        "sizeestimate": sizeestimate.toString(),
+        "roofarea": roofarea.toString(),
+        "panel": panel.toString(),
+        "requiredarea": requiredarea.toString(),
+        "is_doable": doable.toString(),
+        // "date": date,
+      },
+    );
+    print("respons addcalcu : " + response.statusCode.toString());
+    var url = Uri.parse("https://mypanel.up.railway.app/calculator/show_json");
+
+    var responseJson = await http.get(
+      url,
+      headers: request.headers,
+    );
+
+    var data = jsonDecode(utf8.decode(responseJson.bodyBytes));
+    print("respons history JSon : " + response.statusCode.toString());
+
+    print(data);
+  } catch (e) {
     print(e);
-  };
-
-
+  }
+  ;
 }
