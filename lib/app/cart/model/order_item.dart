@@ -78,7 +78,7 @@ class Order {
     customer: json["customer"],
     dateOrdered: DateTime.parse(json["date_ordered"]),
     isComplete: json["is_complete"],
-    transactionId: json["transaction_id"],
+    transactionId: json["transaction_id"] ?? "",
   );
 
   Map<String, dynamic> toJson() => {

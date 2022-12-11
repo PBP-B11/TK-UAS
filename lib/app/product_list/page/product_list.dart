@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:my_panel/app/product_list/models/product.dart';
 import 'package:my_panel/app/product_list/page/appbar.dart';
+import 'package:my_panel/app/product_list/page/product_form.dart';
 
 import 'package:my_panel/util/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -8,7 +9,7 @@ import 'package:provider/provider.dart';
 
 import 'package:my_panel/util/providers/user_provider.dart';
 import 'package:my_panel/app/cart/page/cart.dart';
-import 'package:my_panel/app/product_list/api/fetch_product.dart';
+import 'package:my_panel/app/product_list/api/product_api.dart';
 
 class ProductListPage extends StatefulWidget {
   const ProductListPage({super.key});
@@ -130,19 +131,26 @@ class _ProductListPageState extends State<ProductListPage> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: TextButton(
-          style: TextButton.styleFrom(
-            minimumSize: const Size.fromHeight(20),
-            foregroundColor: Colors.white,
-            backgroundColor: Colors.blue,
+        floatingActionButton: Container(
+          padding: EdgeInsets.all(10),
+          child: TextButton(
+            style: TextButton.styleFrom(
+              foregroundColor: Colors.white,
+              backgroundColor: Colors.blue,
+            ),
+            child: Text("Tambah Produk",
+              style: const TextStyle(
+                  fontSize: 16
+              ),),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => const ProductFormPage()
+                ),
+              );
+            },
           ),
-          child: Text("Tambah Produk",
-            style: const TextStyle(
-                fontSize: 14
-            ),),
-          onPressed: () async {
-
-          },
         ),
       ),
     );
