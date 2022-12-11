@@ -26,14 +26,12 @@ class _CalculatorFormState extends State<CalculatorForm> {
       appBar: AppBar(
         title: Text('Calculator Form'),
       ),
-      drawer: MyDrawer(),
       body: Form(
       key: _formKey, //validasi input di form
       child: ListView(
         children: [
           Padding( padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
           child : TextFormField(
-            controller: TextEditingController(text: "Initial Text here"),
             keyboardType: TextInputType.number,
           decoration: InputDecoration(
               labelText: "Tagihan Listrik Selama 1 Tahun (KWH)",
