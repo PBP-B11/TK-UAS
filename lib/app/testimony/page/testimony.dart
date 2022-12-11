@@ -5,6 +5,7 @@ import 'package:my_panel/app/testimony/testi_form.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+
 class TestimonyPage extends StatefulWidget {
   const TestimonyPage({super.key});
 
@@ -19,6 +20,8 @@ class _TestimonyPageState extends State<TestimonyPage> {
       appBar: AppBar(
         title: Text('Testimoni'),
       ),
+    
+        
       body: FutureBuilder(
         future: Testimoni.fetchTestimoni(),
         builder: (context, AsyncSnapshot snapshot){
@@ -90,25 +93,20 @@ class _TestimonyPageState extends State<TestimonyPage> {
               }
             }
           }),
-      drawer: MyDrawer(),
-      floatingActionButton: Padding(
-          padding: const EdgeInsets.fromLTRB(50, 10, 10, 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topCenter,
-                child: FloatingActionButton.extended(
-                  onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => AddTesti()),
-                  ),
-                  label: const Text('Add Testimoni'),
-                  icon: const Icon(Icons.add),
-                ),
-              ),
-            ],
-          )),
+      floatingActionButton: Padding(padding: const EdgeInsets.fromLTRB(40,10,10,10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: FloatingActionButton.extended(
+              onPressed: ()=> Navigator.push(context, MaterialPageRoute(builder: (context)=> AddTesti())), label: const Text("Add your Testimoni"),
+              icon: const Icon(Icons.add),) ,
+          )
+        ],
+      ),),
+      
     );
   }
 }
+
