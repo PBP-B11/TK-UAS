@@ -129,7 +129,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
             ),
             onPressed:()async{
               if (_formKey.currentState!.validate()){
-                var user = context.watch<UserManagement>();
+                var user = context.read<UserManagement>();
                 var solar_array_output = ((tagihan)/(365*solar_hours)).ceil();
                 var solar_array_size = (solar_array_output * ((offset/100)/(envfactor/100))).ceil();
                 var required_panel = ((solar_array_size*1000)/300).ceil();
@@ -139,7 +139,8 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 }
                 DateTime dateToday =new DateTime.now();
                 String date = dateToday.toString().substring(0,10);
-                createCalculator(context, user.userLoggedIn,tagihan, offset, envfactor, solar_array_size, luas_atap, required_panel, required_area, doable, date);
+                fetchCalculator(context);
+                // createCalculator( context,user.userLoggedIn!.id,tagihan, offset, envfactor, solar_array_size, luas_atap, required_panel, required_area, doable, date);
               }
 
             },

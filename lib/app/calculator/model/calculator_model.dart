@@ -6,7 +6,7 @@ import 'dart:convert';
 import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-
+import 'package:my_panel/util/providers/user_provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -53,16 +53,16 @@ class Fields {
     required this.date,
   });
 
-  int user;
-  int electricity;
-  int offset;
-  int envfactor;
-  int sizeestimate;
-  int roofarea;
-  int panel;
-  int requiredarea;
+  dynamic user;
+  dynamic electricity;
+  dynamic offset;
+  dynamic envfactor;
+  dynamic sizeestimate;
+  dynamic roofarea;
+  dynamic panel;
+  dynamic requiredarea;
   bool isDoable;
-  String date;
+  dynamic date;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
     user: json["user"],
@@ -90,21 +90,20 @@ class Fields {
     "date": date,
   };
 }
-Future<List<Calculator>> fetchCalculator() async {
+Future<List<Calculator>> fetchCalculator(BuildContext context) async { //fetch no problemo
+  final request = context.read<CookieRequest>();
   var url = Uri.parse('https://mypanel.up.railway.app/calculator/show_json');
   var response = await http.get(
     url,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-    },
+    headers: request.headers,
   );
-  if (response.statusCode != 200) {
-    throw Exception("Failed to load list.");
-  }
+
+  print("respons fetchCalcu : " + response.statusCode.toString());
+
   // melakukan decode response menjadi bentuk json
-  final data = jsonDecode(utf8.decode(response.bodyBytes));
-  // melakukan konversi data json menjadi object Article
+  var data = jsonDecode(utf8.decode(response.bodyBytes));
+
+  // melakukan konversi data json menjadi object Calculator
   List<Calculator> listCalculator = [];
   for (var d in data) {
     if (d != null) {
@@ -113,7 +112,7 @@ Future<List<Calculator>> fetchCalculator() async {
   }
   return listCalculator;
 }
-Future<dynamic> createCalculator( BuildContext context, dynamic user,
+Future<dynamic> createCalculator( BuildContext context, dynamic user, //kamu kenapa suka 403 sih aneh
     dynamic electricity, dynamic offset,
     dynamic envfactor, dynamic sizeestimate,
     dynamic roofarea, dynamic panel,
