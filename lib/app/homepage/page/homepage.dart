@@ -27,46 +27,51 @@ class _MyHomePageState extends State<MyHomePage> {
     final user = context.watch<UserManagement>();
     return Scaffold(
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              // Hello username, profile, and mycart
-              Padding(
-                padding: const EdgeInsets.only(top: 15, left: 20, bottom: 15, right: 20),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    // Hello username
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("Hello, ",
-                          style: TextStyle(
-                            fontSize: 22,
-                          ),),
-                        Text(user.userLoggedIn?.name ?? "Unknown user",
-                          style: const TextStyle(
-                            fontSize: 18,
-                            color: Colors.grey,
-                          ),),
-                      ],
-                    ),
-                    // Cart and profile
-                    Row(
-                      children: [
-                        IconButton(
-                          icon: const Icon(
-                            Icons.shopping_cart,
-                            size: 30,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const CartPage()),
-                            );
-                          },
+          child: SingleChildScrollView(
+        child: Column(
+          children: [
+            // Hello username, profile, and mycart
+            Padding(
+              padding: const EdgeInsets.only(
+                  top: 15, left: 20, bottom: 15, right: 20),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  // Hello username
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Text(
+                        "Hello, ",
+                        style: TextStyle(
+                          fontSize: 22,
                         ),
+                      ),
+                      Text(
+                        user.userLoggedIn?.name ?? "Unknown user",
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  // Cart and profile
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.shopping_cart,
+                          size: 30,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CartPage()),
+                          );
+                        },
                       ),
                       Text(
                         user.userLoggedIn!.name,
