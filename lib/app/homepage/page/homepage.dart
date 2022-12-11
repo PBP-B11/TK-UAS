@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_panel/app/article/page/article_widget.dart';
 import 'package:my_panel/app/profile/page/profile.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
 import 'package:provider/provider.dart';
@@ -66,170 +67,230 @@ class _MyHomePageState extends State<MyHomePage> {
                             );
                           },
                         ),
-                        IconButton(
-                          icon: const Icon(
-                            Icons.person,
-                            size: 30,
-                            color: Colors.grey,
-                          ),
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ProfilePage()),
-                            );
-                          },
+                      ),
+                      Text(
+                        user.userLoggedIn!.name,
+                        style: const TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey,
                         ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
-
-              // Features
-              Column(
-                children: [
-                  const Text("Features",
-                    style: TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.bold,
-                    ),
+                      ),
+                    ],
                   ),
-                  Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: CustomScrollView(
-                      physics: BouncingScrollPhysics(),
-                      shrinkWrap: true,
-                      slivers: [
-                        SliverGrid.extent(
-                          maxCrossAxisExtent: 150,
-                          mainAxisSpacing: 10,
-                          crossAxisSpacing: 10,
-                          childAspectRatio: 0.75,
-                          children: [
-                            Material(
-                              elevation: 1,
-                              borderRadius: BorderRadius.circular(10),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const ProductListPage()),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Icon(Icons.shopping_bag,
-                                        size: 30,),
-                                      Text("Produk",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Material(
-                              elevation: 1,
-                              borderRadius: BorderRadius.circular(10),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const CalculatorPage()),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Icon(Icons.calculate_rounded,
-                                        size: 30,),
-                                      Text("Calculator",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Material(
-                              elevation: 1,
-                              borderRadius: BorderRadius.circular(10),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const TestimonyPage()),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Icon(Icons.people_outline_rounded,
-                                        size: 30,),
-                                      Text("Testimoni",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-
-                            Material(
-                              elevation: 1,
-                              borderRadius: BorderRadius.circular(10),
-                              child: InkWell(
-                                onTap: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const QnaPage()),
-                                  );
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(8),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                                    children: [
-                                      Icon(Icons.question_mark_outlined,
-                                        size: 30,),
-                                      Text("QnA",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                        ),),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        )
-                      ],
-                    ),
+                  // Cart and profile
+                  Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(
+                          Icons.shopping_cart,
+                          size: 30,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CartPage()),
+                          );
+                        },
+                      ),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.person,
+                          size: 30,
+                          color: Colors.grey,
+                        ),
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const ProfilePage()),
+                          );
+                        },
+                      ),
+                    ],
                   ),
                 ],
               ),
-              
-              //
-            ],
-          ),
-        )
-      ),
+            ),
+
+            // Features
+            Column(
+              children: [
+                const Text(
+                  "Features",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomScrollView(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    slivers: [
+                      SliverGrid.extent(
+                        maxCrossAxisExtent: 150,
+                        mainAxisSpacing: 10,
+                        crossAxisSpacing: 10,
+                        childAspectRatio: 0.75,
+                        children: [
+                          Material(
+                            elevation: 1,
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const ProductListPage()),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.shopping_bag,
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      "Produk",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Material(
+                            elevation: 1,
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const CalculatorPage()),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.calculate_rounded,
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      "Calculator",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Material(
+                            elevation: 1,
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const TestimonyPage()),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.people_outline_rounded,
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      "Testimoni",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                          Material(
+                            elevation: 1,
+                            borderRadius: BorderRadius.circular(10),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const QnaPage()),
+                                );
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(8),
+                                child: Column(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Icon(
+                                      Icons.question_mark_outlined,
+                                      size: 30,
+                                    ),
+                                    Text(
+                                      "QnA",
+                                      textAlign: TextAlign.center,
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+                const Text(
+                  "Article",
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                FutureArticleThumbnail()
+              ],
+            ),
+
+            //
+          ],
+        ),
+      )),
     );
   }
 }

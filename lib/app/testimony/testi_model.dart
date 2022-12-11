@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 List<Testimoni> TestimoniFromJson(String str) =>
@@ -34,20 +33,15 @@ class Testimoni {
       };
 
   static Future<List<Testimoni>> fetchTestimoni() async {
-    //tanyain kalo mau get per-kategori gimana? masukin link-nya parameternya gimana
-    //buat dropdown-nya
-    //
     var url =
         Uri.parse('https://mypanel.up.railway.app/testimoni/flutter/json/');
     var response = await http.get(
       url,
       headers: {
-        //"Access-Control-Allow-Origin": "*",
         "Content-Type": "application/json",
       },
     );
 
-    //print(jsonDecode(utf8.decode(response.bodyBytes)));
     var data = jsonDecode(utf8.decode(response.bodyBytes));
     print(data);
 
