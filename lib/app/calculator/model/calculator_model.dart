@@ -3,10 +3,10 @@
 //     final welcome = welcomeFromJson(jsonString);
 
 import 'dart:convert';
+import 'package:flutter/cupertino.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
 
-import 'dart:convert';
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -113,18 +113,19 @@ Future<List<Calculator>> fetchCalculator() async {
   }
   return listCalculator;
 }
-Future<Calculator> createCalculator(
+Future<dynamic> createCalculator( BuildContext context, dynamic user,
     dynamic electricity, dynamic offset,
     dynamic envfactor, dynamic sizeestimate,
     dynamic roofarea, dynamic panel,
     dynamic requiredarea, dynamic doable, dynamic date) async {
-  
-  final response = await http.post(
+
+  final request = context.read<CookieRequest>();
+  try{
+  var response = await http.post(
     Uri.parse('https://mypanel.up.railway.app/calculator/show_json'),
-    headers: <String, String>{
-      'Content-Type': 'application/json; charset=UTF-8',
-    },
+    headers: request.headers,
     body: jsonEncode(<String, dynamic>{
+      "user" : user,
       "electricity": electricity,
       "offset": offset,
       "envfactor": envfactor,
@@ -134,16 +135,13 @@ Future<Calculator> createCalculator(
       "requiredarea": requiredarea,
       "is_doable": doable,
       "date": date,
-    }),
+    },
+    )
   );
+  print("respons addcalcu : " + response.statusCode.toString());
+      }catch(e){
+    print(e);
+  };
 
-  if (response.statusCode == 201) {
-    // If the server did return a 201 CREATED response,
-    // then parse the JSON.
-    return Calculator.fromJson(jsonDecode(response.body));
-  } else {
-    // If the server did not return a 201 CREATED response,
-    // then throw an exception.
-    throw Exception('Failed to create album.');
-  }
+
 }
