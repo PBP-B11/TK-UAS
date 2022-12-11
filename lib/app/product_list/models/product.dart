@@ -40,7 +40,7 @@ class Fields {
   });
 
   String name;
-  int price;
+  double price;
   String image;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(

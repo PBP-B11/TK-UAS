@@ -220,20 +220,20 @@ class _LoginPageState extends State<LoginPage> {
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   onPressed: () async {
-                                    if (_loginFormKey.currentState!
-                                        .validate()) {
+                                    if (_loginFormKey.currentState!.validate()) {
                                       // 'username' and 'password' should be the values of the user login form.
                                       final response = await request.login(
                                           "https://mypanel.up.railway.app/auth/login/",
+                                          //"http://10.0.2.2:8000/auth/login/",
                                           {
                                             'username': _username,
                                             'password': _password1,
-                                          });
+                                          }
+                                      );
                                       if (request.loggedIn) {
                                         // Code here will run if the login succeeded.
                                         _loginFormKey.currentState!.reset();
-                                        var cust =
-                                            Customer.fromJson(response["user"]);
+                                        var cust = Customer.fromJson(response["user"]);
                                         user.setUser(cust);
                                         Navigator.pushReplacement(
                                           context,
