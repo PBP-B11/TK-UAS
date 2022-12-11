@@ -4,6 +4,7 @@ import 'package:my_panel/app/calculator/model/calculator_model.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
 import 'package:provider/provider.dart';
+import 'package:my_panel/app/calculator/page/view_history_calculator.dart';
 class CalculatorForm extends StatefulWidget {
   const CalculatorForm({super.key});
 
@@ -157,7 +158,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 DateTime dateToday =new DateTime.now();
                 String date = dateToday.toString().substring(0,10);
                 if (doable == true ){
-                  createCalculator( context,user.userLoggedIn!.id,tagihan, offset, envfactor, solar_array_size, luas_atap, required_panel, required_area, doable, date);
+                  createCalculator(context,tagihan.toString(), offset.toString(), envfactor.toString(), solar_array_size.toString(), luas_atap.toString(), required_panel.toString(), required_area.toString(), doable.toString(), date.toString());
                   showDialog(
                     context: context,
                     builder: (context) {
@@ -174,12 +175,12 @@ class _CalculatorFormState extends State<CalculatorForm> {
                             children: <Widget>[
                               Center(
                                 child: Column(children: [
-                                  Text('Congratulations! '),
-                                  Text('Your Specification Meet Your Needs'),
+                                  Text('Congratulations! ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.green)),
+                                  Text('Your Specification Meet Your Needs',style: TextStyle(fontWeight: FontWeight.bold)),
                                   Text('Required Panel : $required_panel'),
                                   Text("Required Area For Panel : $required_area"),
                                   Text("Your Total Roof Area : $luas_atap"),
-                                  Text("Is It Doable? : YES")
+                                  Text("Is It Doable? : YES",style: TextStyle(fontWeight: FontWeight.bold))
                                 ]),
                               ),
                               SizedBox(height: 20),
@@ -213,12 +214,12 @@ class _CalculatorFormState extends State<CalculatorForm> {
                             children: <Widget>[
                               Center(
                                 child: Column(children: [
-                                  Text('Oops, We are sorry! '),
-                                  Text('Your Specification Doesnt Meet Your Needs'),
+                                  Text('Oops, We are sorry! ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red)),
+                                  Text('Your Specification Does Not Meet Your Needs',style: TextStyle(fontWeight: FontWeight.bold)),
                                   Text('Required Panel : $required_panel'),
                                   Text("Required Area For Panel : $required_area"),
                                   Text("Your Total Roof Area : $luas_atap"),
-                                  Text("Is It Doable? : NO")
+                                  Text("Is It Doable? : NO",style: TextStyle(fontWeight: FontWeight.bold))
                                 ]),
                               ),
                               SizedBox(height: 20),
@@ -242,7 +243,15 @@ class _CalculatorFormState extends State<CalculatorForm> {
               "Cek Hasil Kalkulasi Anda",
               style: TextStyle(color: Colors.white),
             ),
-          ),),
+          ),
+          ),
+          TextButton(
+              onPressed: () {Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => CalculatorHistory()),
+              );},
+              child: Text("Cek History Kalkulasi Anda!",style:TextStyle(color: Colors.red)))
         ],
       ),
     ),
