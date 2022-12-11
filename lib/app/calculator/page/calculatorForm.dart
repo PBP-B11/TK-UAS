@@ -14,16 +14,6 @@ class CalculatorForm extends StatefulWidget {
 
 class _CalculatorFormState extends State<CalculatorForm> {
   @override
-  String? numberValidator(String? value) {
-    if(value == null) {
-      return "This field cannot be empty";
-    }
-    final n = num.tryParse(value);
-    if(n == null) {
-      return '"$value" is not a valid number';
-    }
-    return null;
-  }
   final _formKey = GlobalKey<FormState>();
   var tagihan = 0;
   var offset = 0;
@@ -43,6 +33,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
         children: [
           Padding( padding: EdgeInsets.symmetric(horizontal: 8, vertical: 10),
           child : TextFormField(
+            controller: TextEditingController(text: "Initial Text here"),
             keyboardType: TextInputType.number,
           decoration: InputDecoration(
               labelText: "Tagihan Listrik Selama 1 Tahun (KWH)",
