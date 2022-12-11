@@ -158,7 +158,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 DateTime dateToday =new DateTime.now();
                 String date = dateToday.toString().substring(0,10);
                 if (doable == true ){
-                  createCalculator(context,tagihan.toString(), offset.toString(), envfactor.toString(), solar_array_size.toString(), luas_atap.toString(), required_panel.toString(), required_area.toString(), doable.toString(), date.toString());
+                  createCalculator(context,tagihan.toString(), offset.toString(), envfactor.toString(), solar_array_size.toString(), luas_atap.toString(), required_panel.toString(), required_area.toString(), doable.toString());
                   showDialog(
                     context: context,
                     builder: (context) {

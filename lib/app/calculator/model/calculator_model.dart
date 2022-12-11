@@ -120,7 +120,7 @@ Future<List<Calculator>> fetchCalculator(BuildContext context) async {
 
 Future<dynamic> createCalculator(
     BuildContext context,
-    dynamic user, //kamu kenapa suka 403 sih aneh
+    //kamu kenapa suka 403 sih aneh
     dynamic electricity,
     dynamic offset,
     dynamic envfactor,
@@ -129,7 +129,7 @@ Future<dynamic> createCalculator(
     dynamic panel,
     dynamic requiredarea,
     dynamic doable,
-    dynamic date) async {
+    ) async {
   final request = context.read<CookieRequest>();
   try {
     var response = await http.post(
