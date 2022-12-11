@@ -54,7 +54,7 @@ class _ArticlePageState extends State<ArticlePage> {
       appBar: AppBar(
         title: Text('Article'),
       ),
-      drawer: MyDrawer(),
+      // drawer: MyDrawer(),
       body: SingleChildScrollView(
         child: Container(
           margin: EdgeInsets.symmetric(horizontal: 12),

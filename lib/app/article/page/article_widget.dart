@@ -10,10 +10,13 @@ import 'package:google_fonts/google_fonts.dart';
 
 import 'package:my_panel/app/article/model/article_model.dart';
 import 'package:my_panel/app/article/util/future.dart';
+import 'package:my_panel/app/article/page/article.dart';
 
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
+
+import 'package:blur/blur.dart';
 
 class TombolLike extends StatefulWidget {
   const TombolLike({super.key, required this.id});
@@ -142,9 +145,7 @@ class _FutureArticleCardState extends State<FutureArticleCard> {
                               ),
                             ),
                             Text(
-                              formattedDate +
-                                  " Jumlah Like : " +
-                                  article.fields.like.toString(),
+                              formattedDate,
                               style: GoogleFonts.plusJakartaSans(
                                 fontSize: 13.0,
                                 color: Colors.black54,
@@ -397,48 +398,53 @@ class ArticleCarousel extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Widget> imageSliders = listArticle
         .map(
-          (article) => Container(
-            width: MediaQuery.of(context).size.width,
-            margin: EdgeInsets.all(5.0),
-            child: ClipRRect(
-                borderRadius: BorderRadius.all(Radius.circular(5.0)),
-                child: Stack(
-                  children: <Widget>[
-                    Image.network(article.fields.gambar,
-                        height: MediaQuery.of(context).size.height,
-                        width: MediaQuery.of(context).size.width,
-                        fit: BoxFit.cover),
-                    Positioned(
-                      bottom: 0.0,
-                      left: 0.0,
-                      right: 0.0,
-                      child: Container(
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color.fromARGB(200, 0, 0, 0),
-                              Color.fromARGB(0, 238, 86, 86)
-                            ],
-                            begin: Alignment.bottomCenter,
-                            end: Alignment.topCenter,
+          (article) => InkWell(
+            child: Container(
+              width: MediaQuery.of(context).size.width,
+              margin: EdgeInsets.all(5.0),
+              child: ClipRRect(
+                  borderRadius: BorderRadius.all(Radius.circular(5.0)),
+                  child: Stack(
+                    children: <Widget>[
+                      Image.network(article.fields.gambar,
+                          height: MediaQuery.of(context).size.height,
+                          width: MediaQuery.of(context).size.width,
+                          fit: BoxFit.cover),
+                      Positioned(
+                        bottom: 0.0,
+                        left: 0.0,
+                        right: 0.0,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            gradient: LinearGradient(
+                              colors: [
+                                Color.fromARGB(200, 0, 0, 0),
+                                Color.fromARGB(0, 238, 86, 86)
+                              ],
+                              begin: Alignment.bottomCenter,
+                              end: Alignment.topCenter,
+                            ),
                           ),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                            vertical: 10.0, horizontal: 20.0),
-                        child: Text(
-                          article.fields.title,
-                          overflow: TextOverflow.ellipsis,
-                          maxLines: 2,
-                          style: GoogleFonts.plusJakartaSans(
-                            color: Colors.white,
-                            fontSize: 22.0,
-                            fontWeight: FontWeight.bold,
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10.0, horizontal: 20.0),
+                          child: Text(
+                            article.fields.title,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 2,
+                            style: GoogleFonts.plusJakartaSans(
+                              color: Colors.white,
+                              fontSize: 22.0,
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ],
-                )),
+                    ],
+                  )),
+            ),
+            onTap: () async {
+              openUrlinApp(url: article.fields.url);
+            },
           ),
         )
         .toList();
@@ -481,6 +487,191 @@ class FutureArticleCarousel extends StatelessWidget {
               List<Article> listArticle = snapshot.data!;
 
               return ArticleCarousel(listArticle: listArticle);
+            }
+          }
+        });
+  }
+}
+
+class FutureArticleThumbnail extends StatefulWidget {
+  const FutureArticleThumbnail({super.key});
+
+  @override
+  State<FutureArticleThumbnail> createState() => _FutureArticleThumbnailState();
+}
+
+class _FutureArticleThumbnailState extends State<FutureArticleThumbnail> {
+  @override
+  Widget build(BuildContext context) {
+    // final user = context.watch<UserManagement>();
+    // final penggunaLogin = user.userLoggedIn;
+    // bool teknisi;
+
+    // if (penggunaLogin != null) {
+    //   teknisi = penggunaLogin.isTechnician;
+    // } else {
+    //   teknisi = false;
+    // }
+
+    String url = "https://mypanel.up.railway.app/article/artikel-populer-json/";
+
+    return FutureBuilder(
+        future: fetchArticle(context, url),
+        builder: (context, AsyncSnapshot snapshot) {
+          if (snapshot.data == null) {
+            return const Center();
+          } else {
+            if (!snapshot.hasData) {
+              return Column(
+                children: [
+                  Text(
+                    "Tidak ada Artikel :(",
+                    style: GoogleFonts.plusJakartaSans(
+                        color: Color(0xff59A5D8), fontSize: 20),
+                  ),
+                  SizedBox(height: 8),
+                ],
+              );
+            } else {
+              List<Article> listArticle = snapshot.data!;
+
+              List<Material> listArticleThumbnail = [];
+              for (int i = 0; i < listArticle.length; i++) {
+                Article article = listArticle[i];
+                String formattedDate =
+                    DateFormat('MMM d, yyyy').format(article.fields.date);
+
+                Material articleMaterial = Material(
+                  elevation: 1,
+                  borderRadius: BorderRadius.circular(10),
+                  child: InkWell(
+                    onTap: () async {
+                      openUrlinApp(url: article.fields.url);
+                    },
+                    child: Column(
+                      children: <Widget>[
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(10),
+                          child: Image.network(
+                            article.fields.gambar,
+                            fit: BoxFit.cover,
+                            height: 105,
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                              padding: EdgeInsets.fromLTRB(8, 8, 8, 8),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                mainAxisSize: MainAxisSize.max,
+                                children: <Widget>[
+                                  Text(
+                                    article.fields.title,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                  Text(
+                                    formattedDate,
+                                    style: TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.black54,
+                                    ),
+                                  ),
+                                ],
+                              )),
+                        )
+                      ],
+                    ),
+                  ),
+                );
+
+                listArticleThumbnail.add(articleMaterial);
+              }
+
+              Material routeToArticlePage = Material(
+                elevation: 1,
+                borderRadius: BorderRadius.circular(10),
+                child: InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const ArticlePage()),
+                    );
+                  },
+                  child: Stack(
+                    children: [
+                      ClipRRect(
+                        borderRadius: BorderRadius.circular(8),
+                        child: Image.asset(
+                          'lib/assets/images/panel_surya.jpg',
+                          height: MediaQuery.of(context).size.height,
+                          fit: BoxFit.cover,
+                        ).blurred(
+                            blur: 2,
+                            blurColor: Color.fromARGB(221, 127, 127, 127)),
+                        // ), Image.network(
+                        //         listArticle[listArticle.length - 1].fields.gambar,
+                        //         fit: BoxFit.cover,
+                        //       ).blurred(
+                        //           blur: 3,
+                        //           blurColor: Color.fromARGB(221, 49, 49, 49)),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Icon(
+                            Icons.arrow_forward_ios_outlined,
+                            size: 50,
+                            color: Colors.white,
+                          ),
+                          Center(
+                            child: Text(
+                              "Lihat Selengkapnya",
+                              textAlign: TextAlign.center,
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              );
+
+              listArticleThumbnail.add(routeToArticlePage);
+
+              try {
+                return Padding(
+                  padding: const EdgeInsets.all(15.0),
+                  child: CustomScrollView(
+                    physics: BouncingScrollPhysics(),
+                    shrinkWrap: true,
+                    slivers: [
+                      SliverGrid.extent(
+                        maxCrossAxisExtent: 175,
+                        mainAxisSpacing: 13,
+                        crossAxisSpacing: 13,
+                        childAspectRatio: 1.0,
+                        children: listArticleThumbnail,
+                      )
+                    ],
+                  ),
+                );
+              } catch (e) {
+                return Container();
+              }
             }
           }
         });
