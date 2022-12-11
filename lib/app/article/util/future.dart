@@ -18,7 +18,6 @@ Future<List<Article>> fetchArticle(BuildContext context, String urlJson) async {
     url,
     headers: request.headers,
   );
-
   print("respons fetchArticle : " + response.statusCode.toString());
 
   // melakukan decode response menjadi bentuk json
