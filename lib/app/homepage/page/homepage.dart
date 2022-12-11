@@ -43,7 +43,7 @@ class _MyHomePageState extends State<MyHomePage> {
                           style: TextStyle(
                             fontSize: 22,
                           ),),
-                        Text(user.userLoggedIn!.name,
+                        Text(user.userLoggedIn?.name ?? "Unknown user",
                           style: const TextStyle(
                             fontSize: 18,
                             color: Colors.grey,
