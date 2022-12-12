@@ -166,11 +166,24 @@ class _CartPageState extends State<CheckoutPage> {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        const Text("Total Tagihan",
-                          style: TextStyle(
-                            fontSize: 16,
-                          ),),
-                        _totalPrice == 0
+                        RichText(
+                          text: TextSpan(
+                              children: <TextSpan>[
+                                TextSpan(
+                                    text: 'Total Tagihan: ',
+                                    style: const TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16,
+                                    ),
+                                    recognizer: TapGestureRecognizer()
+                                      ..onTap = () {
+                                        sum(totalPriceList);
+                                      }
+                                ),
+                              ]
+                          ),
+                        ),
+                        _totalPrice != 0
                           ? Text(convertToIdr(_totalPrice, 0),
                               style: const TextStyle(
                                 fontSize: 16,
