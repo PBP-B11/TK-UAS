@@ -327,26 +327,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                   onPressed: () async {
                                     if (_registerFormKey.currentState!
                                         .validate()) {
-                                      // final request1 =
-                                      //     context.read<CookieRequest>();
-
-                                      // var respons = await http.post(
-                                      //   Uri.parse(
-                                      //       "http://localhost:8000/auth/register/"),
-                                      //   body: {
-                                      //     'username': _username,
-                                      //     'password1': _password1,
-                                      //     'password2': _password2,
-                                      //     'register_as': _technician
-                                      //         ? "Technician"
-                                      //         : "Customer",
-                                      //   },
-                                      //   headers: request1.headers,
-                                      // );
                                       // 'username' and 'password' should be the values of the user login form.
                                       final response = await request.post(
                                           "https://mypanel.up.railway.app/auth/register/",
-                                          // "http://localhost:8000/auth/register/",
+                                          // "http://10.0.2.2:8000/auth/register/",
                                           {
                                             'username': _username,
                                             'password1': _password1,
@@ -355,19 +339,14 @@ class _RegisterPageState extends State<RegisterPage> {
                                                 ? "Technician"
                                                 : "Customer",
                                           });
-                                      // print("Respons register : " +
-                                      //     respons.statusCode.toString());
+
                                       print("Respons register : " +
-                                          response["status"]);
-                                      // print("respons register : " +
-                                      //     respons.statusCode.toString());
-                                      // respons.statusCode == 200
+                                          response["status"].toString());
+
                                       if (response["status"] == true) {
                                         // Code here will run if the login succeeded.
                                         _registerFormKey.currentState!.reset();
-                                        // var cust =
-                                        //     Customer.fromJson(response["user"]);
-                                        // user.setUser(cust);
+
                                         Navigator.pop(context);
                                       } else {
                                         // Code here will run if the login failed (wrong username/password).
@@ -389,8 +368,8 @@ class _RegisterPageState extends State<RegisterPage> {
                                                     SizedBox(height: 20),
                                                     Center(
                                                       child: Column(children: [
-                                                        Text("kuda",
-                                                            // response["message"],
+                                                        Text(
+                                                            response["message"],
                                                             textAlign: TextAlign
                                                                 .center,
                                                             style: TextStyle(
@@ -422,7 +401,7 @@ class _RegisterPageState extends State<RegisterPage> {
 
                               Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 25, bottom: 35),
+                                    const EdgeInsets.only(top: 10, bottom: 10),
                                 child: const Text(
                                   "OR",
                                   style: TextStyle(
@@ -435,16 +414,18 @@ class _RegisterPageState extends State<RegisterPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    "New to our Journey?",
+                                    "Already have an account?",
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,
                                     ),
                                   ),
                                   TextButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
                                       child: Text(
-                                        "Register",
+                                        "Login",
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.blue,
