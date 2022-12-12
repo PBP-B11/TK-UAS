@@ -23,8 +23,6 @@ class _QnaPageState extends State<QnaPage> {
       appBar: AppBar(
         title: const Text('Question and Answer'),
       ),
-      drawer: const Drawer(),
-        
       body: FutureBuilder<List<QnaModels>>(
         future: fetchQnaAll(),
         builder: (context, AsyncSnapshot<List<QnaModels>> snapshot){
