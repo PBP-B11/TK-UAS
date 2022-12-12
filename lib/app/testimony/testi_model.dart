@@ -34,7 +34,7 @@ class Testimoni {
 
   static Future<List<Testimoni>> fetchTestimoni() async {
     var url =
-        Uri.parse('https://mypanel.up.railway.app/testimoni/flutter/json/');
+        Uri.parse('https://mypanel.up.railway.app/testimoni/json/');
     var response = await http.get(
       url,
       headers: {
@@ -57,21 +57,21 @@ class Testimoni {
 
 class Fields {
   Fields({
-    required this.rate,
+    required this.title,
     required this.description,
     required this.date,
     required this.user,
     required this.username,
   });
 
-  String rate;
+  String title;
   String description;
   DateTime date;
   int user;
   String username;
 
   factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-        rate: json["rate"],
+        title: json["title"],
         description: json["description"],
         date: DateTime.parse(json["time"]),
         user: json["user"],
@@ -79,7 +79,7 @@ class Fields {
       );
 
   Map<String, dynamic> toJson() => {
-        "rate": rate,
+        "title": title,
         "description": description,
         "date":
             "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
