@@ -100,6 +100,16 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
+            title: const Text('Profile'),
+            onTap: () {
+              // Route menu ke halaman myWatchlist
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(builder: (context) => ProfilePage()),
+              );
+            },
+          ),
+          ListTile(
             title: const Text('Logout'),
             onTap: () async {
               Uri url = Uri.parse("https://mypanel.up.railway.app/logout/");
