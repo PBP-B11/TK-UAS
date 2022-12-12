@@ -12,7 +12,7 @@ import 'dart:io';
 
 class CalculatorHistory extends StatefulWidget {
   const CalculatorHistory({super.key});
-  final String title = 'My Watch List';
+  final String title = 'Your Calculation History';
 
   @override
   State<CalculatorHistory> createState() => _CalculatorHistoryState();
@@ -34,7 +34,6 @@ class _CalculatorHistoryState extends State<CalculatorHistory> {
         appBar: AppBar(
           title: Text(widget.title),
         ),
-        drawer: MyDrawer(),
         body:
           FutureBuilder<List<Calculator>>(
           future: futureCalculator,
@@ -78,15 +77,9 @@ class _CalculatorHistoryState extends State<CalculatorHistory> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-
                             ],
                           )
                       ),
-                      onTap: () {
-                        Navigator.pop(
-                          context,
-                        );
-                      },
                     ),
                   ),
                 );

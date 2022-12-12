@@ -19,7 +19,6 @@ class _CalculatorPageState extends State<CalculatorPage> {
       appBar: AppBar(
         title: Text('Calculator'),
       ),
-      drawer: MyDrawer(),
       body: Column(
         children :[ Image.asset('lib/assets/images/kalkulator1.png',
         height: MediaQuery.of(context).size.height / 2,),
