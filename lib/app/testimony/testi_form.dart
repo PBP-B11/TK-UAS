@@ -26,7 +26,7 @@ class _AddState extends State<AddTesti> {
       appBar: AppBar(
         title: Text("Testimoni Form"),
       ),
-      drawer: buildDrawer(context),
+      drawer: MyDrawer(),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
