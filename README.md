@@ -3,7 +3,7 @@
 
 Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu Komputer Universitas Indonesia, Semester Ganjil 2022/2023
 
-Heroku app url : 
+Heroku app url : [![Build status](https://build.appcenter.ms/v0.1/apps/92c8ece8-2fc3-4565-9b72-a99745390083/branches/main/badge)](https://appcenter.ms)
 
 created by : Kelompok PBP - B11
 
@@ -44,6 +44,8 @@ Aplikasi 'mypanel' adalah aplikasi pertama di Indonesia yang berkecimpung di bid
   - Profile Pengguna - Dikerjakan Oleh Rama Tridigdaya (2106638532)
       
       Menyediakan laman edit profil pengguna
+      
+  - Autentikasi dan Homepage - Dikerjakan oleh Erlangga Ahmad Khadafi (2106750894) dan Muhammad Ruzain (2106750250)
 
 # Alur Webservice
 Semua modul flutter yang kami buat akan menggunakan API dan database json dari website proyek tengah semester yang sudah dibuat. Nantinya, app yang kami buat akan melakukan pengambilan data melalui GET. Dengan memanfaatkan Form, kami juga akan melakukan pengiriman data melalui method POST atau PUT dengan endpoint yang sesuai ke website proyek tengah semester kami.
