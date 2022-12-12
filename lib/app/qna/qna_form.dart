@@ -1,12 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:my_panel/util/drawer.dart';
-import 'package:my_panel/app/qna/qna_model.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class QnaForm extends StatefulWidget {
   const QnaForm({super.key});
-
   @override
   State<QnaForm> createState() => _QnaFormState();
 }
@@ -23,7 +20,7 @@ class _QnaFormState extends State<QnaForm> {
             Uri.parse('https://mypanel.up.railway.app/qna/create_question/' + id),
             headers: <String, String>{'Content-Type': 'application/json'},
             body: jsonEncode(<String, dynamic>{
-                'question': question,
+                'description': question,
                 'answer': answer,
                 'id': int.parse(id),
             })
@@ -71,7 +68,7 @@ class _QnaFormState extends State<QnaForm> {
                                         // Validator sebagai validasi form
                                         validator: (String? value) {
                                             if (value == null || value.isEmpty) {
-                                                return 'Judul tidak boleh kosong!';
+                                                return 'Pertanyaan tidak boleh kosong!';
                                             }
                                             return null;
                                         },
