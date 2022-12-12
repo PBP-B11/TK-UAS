@@ -18,8 +18,6 @@ class Testimoni {
   int pk;
   Fields fields;
 
-  static List<Testimoni> listTestimoni = [];
-
   factory Testimoni.fromJson(Map<String, dynamic> json) => Testimoni(
         model: json["model"],
         pk: json["pk"],
@@ -42,8 +40,9 @@ class Testimoni {
       },
     );
 
+    print(utf8.decode(response.bodyBytes));
     var data = jsonDecode(utf8.decode(response.bodyBytes));
-    print(data);
+    
 
     List<Testimoni> listTestimoni = [];
     for (var d in data) {
@@ -54,36 +53,62 @@ class Testimoni {
     return listTestimoni;
   }
 }
-
 class Fields {
-  Fields({
-    required this.title,
-    required this.description,
-    required this.date,
-    required this.user,
-    required this.username,
-  });
+    Fields({
+        required this.customer,
+        required this.date,
+        required this.title,
+        required this.description,
+    });
 
-  String title;
-  String description;
-  DateTime date;
-  int user;
-  String username;
+    Customer customer;
+    DateTime date;
+    String title;
+    String description;
 
-  factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+    factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+        customer: Customer.fromJson(json["customer"]),
+        date: DateTime.parse(json["date"]),
         title: json["title"],
         description: json["description"],
-        date: DateTime.parse(json["time"]),
-        user: json["user"],
-        username: json["username"],
-      );
+    );
 
-  Map<String, dynamic> toJson() => {
+    Map<String, dynamic> toJson() => {
+        "customer": customer.toJson(),
+        "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
         "title": title,
         "description": description,
-        "date":
-            "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+    };
+}
+
+class Customer {
+    Customer({
+        required this.user,
+        required this.name,
+        required this.email,
+        required this.isTechnician,
+        required this.phone,
+    });
+
+    int user;
+    String name;
+    String email;
+    bool isTechnician;
+    String phone;
+
+    factory Customer.fromJson(Map<String, dynamic> json) => Customer(
+        user: json["user"],
+        name: json["name"],
+        email: json["email"],
+        isTechnician: json["is_technician"],
+        phone: json["phone"],
+    );
+
+    Map<String, dynamic> toJson() => {
         "user": user,
-        "username": username,
-      };
+        "name": name,
+        "email": email,
+        "is_technician": isTechnician,
+        "phone": phone,
+    };
 }
