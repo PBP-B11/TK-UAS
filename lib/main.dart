@@ -3,6 +3,7 @@ import 'package:my_panel/util/providers/user_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'app/authentication/pages/login_page.dart';
+import 'package:my_panel/app/homepage/page/homepage.dart';
 
 import 'util/drawer.dart';
 
@@ -35,6 +36,7 @@ class MyPanel extends StatelessWidget {
         initialRoute: "/login",
         routes: {
           "/login": (BuildContext context) => const LoginPage(),
+          "/": (BuildContext context) => const MyHomePage(),
         },
         debugShowCheckedModeBanner: false,
       ),

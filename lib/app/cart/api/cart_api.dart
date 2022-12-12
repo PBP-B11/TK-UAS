@@ -14,18 +14,12 @@ Future<List<OrderItem>> fetchCart(BuildContext context) async {
   final response = await request.get('https://mypanel.up.railway.app/cart/get_cart/');
   //final response = await request.get('http://10.0.2.2:8000/product/get_product/');
 
-  print("======= response =========");
-  print(response);
-
   for (var d in response) {
     print(d);
     if (d != null) {
       listCart.add(OrderItem.fromJson(d));
     }
   }
-  print("======= list cart =========");
-  print(listCart);
-
   return listCart;
 }
 
@@ -36,7 +30,7 @@ incrementItem(BuildContext context, int pk) async {
       url,
       {}
   );
-  print("increment item : " + response.toString());
+  return response;
 }
 
 decrementItem(BuildContext context, int pk) async {
@@ -46,5 +40,15 @@ decrementItem(BuildContext context, int pk) async {
       url,
       {}
   );
-  print("increment item : " + response.toString());
+  return response;
+}
+
+processOrder(BuildContext context, int pk) async {
+  final request = context.read<CookieRequest>();
+  String url = 'https://mypanel.up.railway.app/cart/process_order/$pk';
+  var response = await request.post(
+      url,
+      {}
+  );
+  return response;
 }

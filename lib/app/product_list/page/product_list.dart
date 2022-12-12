@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_panel/app/product_list/models/product.dart';
 import 'package:my_panel/app/product_list/page/appbar.dart';
 import 'package:my_panel/app/product_list/page/product_form.dart';
-
+import 'package:my_panel/util/utils.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -40,8 +40,6 @@ class _ProductListPageState extends State<ProductListPage> {
               FutureBuilder(
                   future: fetchProduct(context),
                   builder: (context, AsyncSnapshot snapshot) {
-                    print("==== future builder call ====");
-                    print(snapshot.data);
                     if (snapshot.data == null) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
@@ -92,7 +90,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),),
-                                        Text("Rp${snapshot.data[index].fields.price}",
+                                        Text(convertToIdr(snapshot.data[index].fields.price, 0),
                                           style: const TextStyle(
                                             fontWeight: FontWeight.normal,
                                             fontSize: 15,
@@ -106,8 +104,8 @@ class _ProductListPageState extends State<ProductListPage> {
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.blue,
                                     ),
-                                    child: Text("Tambah ke Keranjang ${snapshot.data[index].pk}",
-                                      style: const TextStyle(
+                                    child: const Text("Tambah ke Keranjang",
+                                      style: TextStyle(
                                           fontSize: 14
                                       ),),
                                     onPressed: () async {

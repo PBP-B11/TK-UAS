@@ -12,7 +12,7 @@ import 'dart:io';
 
 class CalculatorHistory extends StatefulWidget {
   const CalculatorHistory({super.key});
-  final String title = 'Your Calculation History';
+  final String title = 'Your Calculation History ';
 
   @override
   State<CalculatorHistory> createState() => _CalculatorHistoryState();
@@ -53,7 +53,7 @@ class _CalculatorHistoryState extends State<CalculatorHistory> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Text("Tagihan Listrik Per Tahun (KWH) : ${snapshot.data![index].fields.electricity}",
+                              Text("Tagihan Listrik Per Tahun (KWH) : ${snapshot.data![index].fields.electricity} KWH",
                                 style: const TextStyle(
                                   // fontSize: 18.0,
                                   fontWeight: FontWeight.w600,
@@ -71,7 +71,13 @@ class _CalculatorHistoryState extends State<CalculatorHistory> {
                                   fontWeight: FontWeight.w600,
                                 ),
                               ),
-                              Text("Luas Atap : ${snapshot.data![index].fields.roofarea} M^2",
+                              Text("Luas Daerah Yang Dibutuhkan : ${snapshot.data![index].fields.requiredarea} M^2",
+                                style: const TextStyle(
+                                  // fontSize: 18.0,
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                              Text("Luas Atap Anda : ${snapshot.data![index].fields.roofarea} M^2",
                                 style: const TextStyle(
                                   // fontSize: 18.0,
                                   fontWeight: FontWeight.w600,

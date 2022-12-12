@@ -205,9 +205,9 @@ class _CalculatorFormState extends State<CalculatorForm> {
                                 child: Column(children: [
                                   Text('Oops, We are sorry! ',style: TextStyle(fontWeight: FontWeight.bold,color: Colors.red)),
                                   Text('Your Specification Does Not Meet Your Needs',style: TextStyle(fontWeight: FontWeight.bold)),
-                                  Text('Required Panel : $required_panel'),
-                                  Text("Required Area For Panel : $required_area"),
-                                  Text("Your Total Roof Area : $luas_atap"),
+                                  Text('Required Panel : $required_panel pcs'),
+                                  Text("Required Area For Panel : $required_area M^2"),
+                                  Text("Your Total Roof Area : $luas_atap M^2" ),
                                   Text("Is It Doable? : NO",style: TextStyle(fontWeight: FontWeight.bold))
                                 ]),
                               ),
@@ -240,7 +240,7 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 MaterialPageRoute(
                     builder: (context) => CalculatorHistory()),
               );},
-              child: Text("Cek History Kalkulasi Anda!",style:TextStyle(color: Colors.red)))
+              child: Text("Cek Rekam Jejak Kalkulasi Anda!",style:TextStyle(color: Colors.red)))
         ],
       ),
     ),

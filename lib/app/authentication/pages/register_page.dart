@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:my_panel/app/authentication/pages/register_page.dart';
+import 'package:my_panel/app/authentication/pages/login_page.dart';
 import 'package:my_panel/main.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
 
@@ -12,15 +12,15 @@ import 'package:http/http.dart' as http;
 
 import '../../homepage/page/homepage.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+class RegisterPage extends StatefulWidget {
+  const RegisterPage({super.key});
 
   @override
-  State<LoginPage> createState() => _LoginPageState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
-  final _loginFormKey = GlobalKey<FormState>();
+class _RegisterPageState extends State<RegisterPage> {
+  final _registerFormKey = GlobalKey<FormState>();
   bool isPasswordVisible = false;
   void togglePasswordView() {
     setState(() {
@@ -30,8 +30,11 @@ class _LoginPageState extends State<LoginPage> {
 
   String _username = "";
   String _password1 = "";
+  String _password2 = "";
+  bool _technician = false;
   final _usernameController = TextEditingController();
-  final _passwordController = TextEditingController();
+  final _passwordController1 = TextEditingController();
+  final _passwordController2 = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Image.asset(
-                    'lib/assets/images/login_model.PNG',
+                    'lib/assets/images/register_model.png',
                     height: MediaQuery.of(context).size.height / 3,
                   ),
                 ),
@@ -73,14 +76,14 @@ class _LoginPageState extends State<LoginPage> {
                       children: [
                         // Login text
                         const Text(
-                          "Login",
+                          "Register",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 28,
                           ),
                         ),
                         Form(
-                          key: _loginFormKey,
+                          key: _registerFormKey,
                           child: Column(
                             children: [
                               // Username Input
@@ -104,6 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                                       child: TextFormField(
                                         controller: _usernameController,
                                         decoration: const InputDecoration(
+                                          labelText: 'Username',
                                           hintText: 'Username',
                                           enabledBorder: UnderlineInputBorder(
                                               borderSide: BorderSide(
@@ -152,9 +156,10 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                     Expanded(
                                       child: TextFormField(
-                                        controller: _passwordController,
+                                        controller: _passwordController1,
                                         obscureText: !isPasswordVisible,
                                         decoration: InputDecoration(
+                                          labelText: 'Password',
                                           hintText: 'Password',
                                           enabledBorder:
                                               const UnderlineInputBorder(
@@ -200,6 +205,104 @@ class _LoginPageState extends State<LoginPage> {
                                   ],
                                 ),
                               ),
+                              // Password 2 input
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 10.0),
+                                      child: Icon(
+                                        Icons.lock_rounded,
+                                        size: 32,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: TextFormField(
+                                        controller: _passwordController2,
+                                        obscureText: !isPasswordVisible,
+                                        decoration: InputDecoration(
+                                          labelText: 'Confirm Password',
+                                          hintText: 'Enter the same password',
+                                          enabledBorder:
+                                              const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.grey)),
+                                          focusedBorder:
+                                              const UnderlineInputBorder(
+                                                  borderSide: BorderSide(
+                                                      color: Colors.blue)),
+                                          suffixIcon: Padding(
+                                            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
+                                            child: InkWell(
+                                              onTap: togglePasswordView,
+                                              child: Icon(
+                                                isPasswordVisible
+                                                    ? Icons.visibility_rounded
+                                                    : Icons
+                                                        .visibility_off_rounded,
+                                                size: 24,
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                        onChanged: (String? value) {
+                                          setState(() {
+                                            _password2 = value!;
+                                          });
+                                        },
+                                        onSaved: (String? value) {
+                                          setState(() {
+                                            _password2 = value!;
+                                          });
+                                        },
+                                        validator: (String? value) {
+                                          if (value == null || value.isEmpty) {
+                                            return 'Password tidak boleh kosong!';
+                                          }
+                                          return null;
+                                        },
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              // Role
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 15, bottom: 15),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children: [
+                                    const Padding(
+                                      padding: EdgeInsets.only(right: 10.0),
+                                      child: Icon(
+                                        Icons.key_outlined,
+                                        size: 32,
+                                        color: Colors.grey,
+                                      ),
+                                    ),
+                                    Expanded(
+                                      child: SwitchListTile(
+                                        title: const Text('Technician'),
+                                        value: _technician,
+                                        onChanged: (bool value) {
+                                          setState(() {
+                                            _technician = value;
+                                          });
+                                        },
+                                        contentPadding: const EdgeInsets.only(right: 0),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+
                               // Button Login
                               Padding(
                                 padding:
@@ -217,30 +320,29 @@ class _LoginPageState extends State<LoginPage> {
                                     ),
                                   ),
                                   child: const Text(
-                                    "Login",
+                                    "Register",
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   onPressed: () async {
-                                    if (_loginFormKey.currentState!.validate()) {
-                                      // 'username' and 'password' should be the values of the user login form.
-                                      final response = await request.login(
-                                        "https://mypanel.up.railway.app/auth/login/",
-                                        //"http://10.0.2.2:8000/auth/login/",
+                                    if (_registerFormKey.currentState!.validate()) {
+                                      final response = await request.post(
+                                        "https://mypanel.up.railway.app/auth/register/",
+                                        // "http://localhost:8000/auth/register/",
                                         {
                                           'username': _username,
-                                          'password': _password1,
+                                          'password1': _password1,
+                                          'password2': _password2,
+                                          'register_as': _technician
+                                            ? "Technician"
+                                            : "Customer",
                                         });
-                                      if (request.loggedIn) {
+                                      if (response["status"] == true) {
                                         // Code here will run if the login succeeded.
-                                        _loginFormKey.currentState!.reset();
-                                        var cust =
-                                            Customer.fromJson(response["user"]);
-                                        user.setUser(cust);
+                                        _registerFormKey.currentState!.reset();
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const MyHomePage()),
+                                              builder: (context) => const LoginPage()),
                                         );
                                       } else {
                                         // Code here will run if the login failed (wrong username/password).
@@ -262,10 +364,10 @@ class _LoginPageState extends State<LoginPage> {
                                                     SizedBox(height: 20),
                                                     Center(
                                                       child: Column(children: [
-                                                        Text(
-                                                          response["message"],
+                                                        Text(response["message"],
+                                                          // response["message"],
                                                           textAlign: TextAlign.center,
-                                                          style: TextStyle(
+                                                          style: const TextStyle(
                                                             fontSize: 16)),
                                                       ]),
                                                     ),
@@ -293,8 +395,7 @@ class _LoginPageState extends State<LoginPage> {
                               ),
 
                               const Padding(
-                                padding:
-                                    EdgeInsets.only(top: 25, bottom: 35),
+                                padding: EdgeInsets.only(top: 25, bottom: 35),
                                 child: Text(
                                   "OR",
                                   style: TextStyle(
@@ -307,7 +408,7 @@ class _LoginPageState extends State<LoginPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    "New to our Journey?",
+                                    "Have join us before?",
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,
@@ -318,11 +419,11 @@ class _LoginPageState extends State<LoginPage> {
                                         Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) => const RegisterPage()),
+                                              builder: (context) => const LoginPage()),
                                         );
                                       },
                                       child: const Text(
-                                        "Register",
+                                        "Login",
                                         style: TextStyle(
                                           fontSize: 16,
                                           color: Colors.blue,

@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_panel/app/cart/api/cart_api.dart';
+import 'package:my_panel/app/homepage/page/homepage.dart';
 import 'package:my_panel/util/utils.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -33,6 +34,7 @@ class _CartPageState extends State<CheckoutPage> {
   @override
   Widget build(BuildContext context) {
     List<int> totalPriceList = [];
+    int _orderPK = -1;
     final user = context.watch<UserManagement>();
     final request = context.watch<CookieRequest>();
     //final response = request.get('http://10.0.2.2:8000/cart/get_cart/');
@@ -46,8 +48,6 @@ class _CartPageState extends State<CheckoutPage> {
               FutureBuilder(
                   future: response,
                   builder: (context, AsyncSnapshot snapshot) {
-                    print("==== future builder call ====");
-                    print(snapshot.data);
                     if (snapshot.data == null) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
@@ -71,6 +71,8 @@ class _CartPageState extends State<CheckoutPage> {
                             shrinkWrap: true,
                             itemCount: snapshot.data.length,
                             itemBuilder: (context, index) {
+                              print(snapshot.data[index]);
+                              _orderPK = snapshot.data[index]["fields"]["order"]["orderId"];
                               var price = double.parse(snapshot.data[index]["fields"]["product"]["price"].toString());
                               var quantity = int.parse(snapshot.data[index]["fields"]["quantity"].toString());
                               totalPriceList.add(price.round() * quantity);
@@ -106,10 +108,18 @@ class _CartPageState extends State<CheckoutPage> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(4.0),
-                                              child: Text(convertToIdr(snapshot.data[index]["fields"]["product"]["price"],2),
+                                              child: Text("${snapshot.data[index]["fields"]["quantity"]} barang",
                                                 style: const TextStyle(
                                                   fontSize: 16,
-                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.all(4.0),
+                                              child: Text(convertToIdr(snapshot.data[index]["fields"]["product"]["price"], 0),
+                                                style: const TextStyle(
+                                                  fontSize: 16,
+                                                  //fontWeight: FontWeight.bold,
                                                 ),
                                               ),
                                             ),
@@ -127,15 +137,16 @@ class _CartPageState extends State<CheckoutPage> {
                                           style: TextStyle(
                                             fontSize: 16,
                                           ),),
-                                        Text(convertToIdr(price.round() * quantity, 2),
+                                        Text(convertToIdr(price.round() * quantity, 0),
                                           style: const TextStyle(
                                             fontSize: 16,
+                                            fontWeight: FontWeight.bold,
                                           ),),
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
+                                  const Padding(
+                                    padding: EdgeInsets.only(left: 10, right: 10, top: 4, bottom: 4),
                                     child: Divider(color: Colors.black,),
                                   )
                                 ],
@@ -148,22 +159,30 @@ class _CartPageState extends State<CheckoutPage> {
                   }
               ),
               Container(
-                padding: EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
+                padding: const EdgeInsets.only(top: 8, bottom: 8, left: 20, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text("Total Tagihan",
+                        const Text("Total Tagihan",
                           style: TextStyle(
                             fontSize: 16,
                           ),),
-                        Text(convertToIdr(_totalPrice, 2),
-                          style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),),
+                        _totalPrice == 0
+                          ? Text(convertToIdr(_totalPrice, 0),
+                              style: const TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            )
+                          : const Text("-",
+                              style: TextStyle(
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                       ],
                     ),
                     TextButton(
@@ -186,11 +205,15 @@ class _CartPageState extends State<CheckoutPage> {
                           ],
                         ),
                       ),
-                      onPressed: () {
-                        // Navigator.push(
-                        //   context,
-                        //   MaterialPageRoute(builder: (context) => const CheckoutPage()),
-                        // );
+                      onPressed: () async {
+                        var response = await processOrder(context, _orderPK);
+                        if (response["status"] == "200"){
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const MyHomePage()),
+                          );
+                        }
                       },
                     ),
                   ],

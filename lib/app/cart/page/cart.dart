@@ -4,6 +4,7 @@ import 'package:my_panel/app/cart/api/cart_api.dart';
 import 'package:my_panel/app/cart/page/checkout.dart';
 
 import 'package:my_panel/util/drawer.dart';
+import 'package:my_panel/util/utils.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
@@ -19,13 +20,20 @@ class CartPage extends StatefulWidget {
 
 class _CartPageState extends State<CartPage> {
   int _totalPrice = 0;
+  bool _disableCheckout = false;
 
-  // updatePrice(int num) {
-  //   setState(() {
-  //     _totalPrice += num;
-  //   });
-  // }
-  
+  enableCheckout(){
+    setState(() {
+      _disableCheckout = false;
+    });
+  }
+
+  disableCheckout(){
+    setState(() {
+      _disableCheckout = true;
+    });
+  }
+
   int sum(List<int> list) {
     int sum = 0;
     for (var element in list) {
@@ -63,8 +71,6 @@ class _CartPageState extends State<CartPage> {
               FutureBuilder(
                 future: response,
                 builder: (context, AsyncSnapshot snapshot) {
-                  print("==== future builder call ====");
-                  print(snapshot.data);
                   if (snapshot.data == null) {
                     return const Center(child: CircularProgressIndicator());
                   } else {
@@ -132,7 +138,7 @@ class _CartPageState extends State<CartPage> {
                                             ),
                                             Padding(
                                               padding: const EdgeInsets.all(4.0),
-                                              child: Text("Rp${snapshot.data[index]["fields"]["product"]["price"]}",
+                                              child: Text(convertToIdr(snapshot.data[index]["fields"]["product"]["price"], 0),
                                                 style: const TextStyle(
                                                   fontSize: 16,
                                                   fontWeight: FontWeight.bold,
@@ -173,7 +179,7 @@ class _CartPageState extends State<CartPage> {
                                         ),
                                       ),
                                       Text(snapshot.data[index]["fields"]["quantity"].toString(),
-                                        style: TextStyle(
+                                        style: const TextStyle(
                                           fontSize: 16,
                                         ),),
                                       IconButton(
@@ -233,23 +239,8 @@ class _CartPageState extends State<CartPage> {
                             ]
                           ),
                         ),
-                        // TextButton(
-                        //   style: TextButton.styleFrom(
-                        //     padding: EdgeInsets.zero,
-                        //   ),
-                        //   child: Text("Total: ",
-                        //     style: TextStyle(
-                        //       color: Colors.grey,
-                        //       fontSize: 18,
-                        //     ),
-                        //   ),
-                        //   onPressed: () {
-                        //     print(totalPriceList);
-                        //     sum(totalPriceList);
-                        //   },
-                        // ),
-                        Text("Rp${_totalPrice}",
-                          style: TextStyle(
+                        Text(convertToIdr(_totalPrice, 0),
+                          style: const TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: 18,
                           ),
@@ -259,7 +250,7 @@ class _CartPageState extends State<CartPage> {
                   ),
                   TextButton(
                     style: TextButton.styleFrom(
-                      minimumSize: Size.square(50),
+                      minimumSize: const Size.square(50),
                       foregroundColor: Colors.white,
                       backgroundColor: Colors.blue,
                     ),

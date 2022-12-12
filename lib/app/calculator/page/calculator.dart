@@ -25,7 +25,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
         Center(
           child : Text('According to the U.S. Energy Information Administration, the average household uses around 893 kilowatt-hours (kWh) per month. A residential solar setup produces anywhere from 350 to 850 kWh per month. Therefore, you can save as much as 95% off your utility bill.',textAlign: TextAlign.center,
           style:
-          TextStyle(color: Colors.blueAccent,fontSize: 21)
+          TextStyle(color: Colors.blueAccent,fontSize: 14)
           ),
         ),
           Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8),
@@ -37,7 +37,7 @@ class _CalculatorPageState extends State<CalculatorPage> {
             );},
             child: Text('Lets Get Started !'),
             style: ButtonStyle(
-              backgroundColor: MaterialStateProperty.all(Colors.blue),
+              backgroundColor: MaterialStateProperty.all(Colors.blueAccent),
               padding: MaterialStateProperty.all(
                 const EdgeInsets.all(20.0),
               ),
