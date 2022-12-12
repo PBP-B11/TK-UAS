@@ -4,6 +4,8 @@ import 'package:my_panel/app/qna/qna_model.dart';
 import 'package:my_panel/app/qna/qna_form.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 
 class QnaPage extends StatefulWidget {
@@ -14,7 +16,6 @@ class QnaPage extends StatefulWidget {
 }
 
 class _QnaPageState extends State<QnaPage> {
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,7 +25,7 @@ class _QnaPageState extends State<QnaPage> {
       drawer: const Drawer(),
         
       body: FutureBuilder(
-        future: QnaModels.fetchQna(),
+        future: QnaModels.fetchQna(context.watch<CookieRequest>()),
         builder: (context, AsyncSnapshot snapshot){
             if (snapshot.data == null){
                 return const Center(child: CircularProgressIndicator());

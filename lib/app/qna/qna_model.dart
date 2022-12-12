@@ -8,46 +8,45 @@ String QnaModelsToJson(List<QnaModels> data) => json.encode(List<dynamic>.from(d
 
 class QnaModels {
   QnaModels({
-    required this.model,
     required this.pk,
     required this.fields,
   });
 
-  String model;
   int pk;
   Fields fields;
 
   static List<QnaModels> listQna = [];
 
   factory QnaModels.fromJson(Map<String, dynamic> json) => QnaModels(
-    model: json["model"],
     pk: json["pk"],
     fields: Fields.fromJson(json["fields"]),
   );
 
   Map<String, dynamic> toJson() => {
-    "model": model,
     "pk": pk,
     "fields": fields.toJson(),
   };
 
 
- static Future<List<QnaModels>> fetchQna() async {
-    var url =
-        Uri.parse('https://mypanel.up.railway.app/qna/show_question_json/');
-    var response = await http.get(
-      url,
-      headers: {
-        "Content-Type": "application/json",
-      },
-    );
+ static Future<List<QnaModels>> fetchQna(CookieRequest request) async {
+    // var url =
+    //     Uri.parse('https://mypanel.up.railway.app/qna/show_question_json/');
+    // var response = await http.get(
+    //   url,
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    // );
+    var response = await request.get('https://mypanel.up.railway.app/qna/show_question_json');
 
-    //print(jsonDecode(utf8.decode(response.bodyBytes)));
+    // //print(jsonDecode(utf8.decode(response.bodyBytes)));
     var data = jsonDecode(utf8.decode(response.bodyBytes));
     print(data);
 
     List<QnaModels> listQna = [];
-    for (var d in data) {
+    List<dynamic> LisData = data["data"];
+    for (int i = 0; i < LisData.length; i++) {
+      var d = LisData[i];
       if (d != null) {
         listQna.add(QnaModels.fromJson(d));
       }
