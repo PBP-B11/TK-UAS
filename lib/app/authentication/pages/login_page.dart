@@ -294,8 +294,8 @@ class _LoginPageState extends State<LoginPage> {
 
                               const Padding(
                                 padding:
-                                    EdgeInsets.only(top: 25, bottom: 35),
-                                child: Text(
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                child: const Text(
                                   "OR",
                                   style: TextStyle(
                                     fontSize: 16,

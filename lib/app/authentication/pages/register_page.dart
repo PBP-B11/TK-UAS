@@ -364,11 +364,12 @@ class _RegisterPageState extends State<RegisterPage> {
                                                     SizedBox(height: 20),
                                                     Center(
                                                       child: Column(children: [
-                                                        Text(response["message"],
-                                                          // response["message"],
-                                                          textAlign: TextAlign.center,
-                                                          style: const TextStyle(
-                                                            fontSize: 16)),
+                                                        Text(
+                                                            response["message"],
+                                                            textAlign: TextAlign
+                                                                .center,
+                                                            style: TextStyle(
+                                                                fontSize: 16)),
                                                       ]),
                                                     ),
                                                     SizedBox(height: 20),
@@ -394,9 +395,10 @@ class _RegisterPageState extends State<RegisterPage> {
                                 ),
                               ),
 
-                              const Padding(
-                                padding: EdgeInsets.only(top: 25, bottom: 35),
-                                child: Text(
+                              Padding(
+                                padding:
+                                    const EdgeInsets.only(top: 10, bottom: 10),
+                                child: const Text(
                                   "OR",
                                   style: TextStyle(
                                     fontSize: 16,
