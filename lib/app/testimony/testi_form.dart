@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/app/testimony/testi_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_panel/app/testimony/page/testimony.dart';
 import 'dart:convert' as convert;
 
 class AddTesti extends StatefulWidget {
@@ -131,7 +132,7 @@ class _AddState extends State<AddTesti> {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 content: Text('Thank you for your response!')));
 
-                            Navigator.push(context, MaterialPageRoute( builder: (context) => TestimonyPage(),),);
+                          Navigator.push( context,MaterialPageRoute(builder: (context) => TestimonyPage()), );
                           },
 
                           child: const Text(

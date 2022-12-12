@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'dart:convert';
+import 'dart:convert' as convert;
 
 class QnaForm extends StatefulWidget {
   const QnaForm({super.key});
@@ -14,18 +14,6 @@ class _QnaFormState extends State<QnaForm> {
     String question = "";
     String answer = "";
 
-    Future<void> submit(BuildContext context, String idUser) async{
-        String id = idUser;
-        final response = await http.post(
-            Uri.parse('https://mypanel.up.railway.app/qna/create_question/' + id),
-            headers: <String, String>{'Content-Type': 'application/json'},
-            body: jsonEncode(<String, dynamic>{
-                'description': question,
-                'answer': answer,
-                'id': int.parse(id),
-            })
-        );
-    }
 
     @override
     Widget build(BuildContext context) {
@@ -83,13 +71,26 @@ class _QnaFormState extends State<QnaForm> {
                                     style: ButtonStyle(
                                         backgroundColor: MaterialStateProperty.all(Colors.blue),
                                     ),
-                                    onPressed: () {
-                                        if (_formKey.currentState!.validate()) {
-                                            //masih dummy --? fix this
-                                            //have to add alert dialog
-                                            String id = '1';//widget.id;
-                                            submit(context, id);
-                                        }
+                                    onPressed: () async {
+                                      
+                                      if (_formKey.currentState!.validate()) {
+                                          print("debug");
+                                          print(question);
+                                          print(answer);
+                                          var data = convert.jsonEncode(
+                                            <String, String>{
+                                              'description': question,
+                                              'answer': answer,}
+                                        );
+                              
+                            
+                                      var response = await http.post(Uri.parse('https://mypanel.up.railway.app/qna/create_question/'),
+                                        body: data);
+
+                              print(response.request);
+                            }
+                            ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                                content: Text('Thank you for your Question!')));
                                     },
                                 ),
                             ],

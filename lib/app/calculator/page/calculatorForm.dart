@@ -62,10 +62,10 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 )),
             onChanged: (String? value){
               setState(() {
-                offset = int.parse(value!)!;});},
+                offset = int.parse(value!);});},
             onSaved: (String? value){
               setState(() {
-                offset = int.parse(value!)!;});},
+                offset = int.parse(value!);});},
             validator: (String? value){
               if (value ==null || value.isEmpty ||  int.tryParse(value) == null || int.parse(value) == 0){
                 return "This field cannot be empty/zero/non-number";
@@ -87,10 +87,10 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 )),
             onChanged: (String? value){
               setState(() {
-                envfactor = int.parse(value!)!;});},
+                envfactor = int.parse(value!);});},
             onSaved: (String? value){
               setState(() {
-                envfactor = int.parse(value!)!;});},
+                envfactor = int.parse(value!);});},
             validator: (String? value){
               if (value ==null || value.isEmpty ||  int.tryParse(value) == null || int.parse(value) == 0){
                 return "This field cannot be empty/zero/non-number";
@@ -113,10 +113,10 @@ class _CalculatorFormState extends State<CalculatorForm> {
                 )),
             onChanged: (String? value){
               setState(() {
-                luas_atap = int.parse(value!)!;});},
+                luas_atap = int.parse(value!);});},
             onSaved: (String? value){
               setState(() {
-                luas_atap = int.parse(value!)!;});},
+                luas_atap = int.parse(value!);});},
             validator: (String? value){
               if (value ==null || value.isEmpty ||  int.tryParse(value) == null || int.parse(value) == 0  ){
                 return "This field cannot be empty/zero/non-number";
