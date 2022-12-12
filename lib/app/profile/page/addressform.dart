@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/app/profile/page/function.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:my_panel/app/profile/model/mainaddress.dart';
-import 'package:my_panel/app/authentication/models/customer.dart';
+import 'package:my_panel/app/profile/page/profile.dart';
 
 class AddressForm extends StatefulWidget {
     const AddressForm({super.key});
@@ -218,7 +214,10 @@ class _AddressFormState extends State<AddressForm> {
                                           SizedBox(height: 20),
                                           TextButton(
                                             onPressed: () {
-                                              Navigator.pop(context);
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => ProfilePage()),
+                                              );
                                             },
                                             child: Text('Kembali'),
                                           ), 
