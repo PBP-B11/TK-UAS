@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
-
+import 'package:my_panel/app/qna/qna_fetch.dart';
 
 class QnaPage extends StatefulWidget {
   const QnaPage({Key? key}) : super(key: key);
@@ -16,6 +16,7 @@ class QnaPage extends StatefulWidget {
 }
 
 class _QnaPageState extends State<QnaPage> {
+  final Future<List<QnaModels>> future = fetchQnaAll();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,9 +25,9 @@ class _QnaPageState extends State<QnaPage> {
       ),
       drawer: const Drawer(),
         
-      body: FutureBuilder(
-        future: QnaModels.fetchQna(context.watch<CookieRequest>()),
-        builder: (context, AsyncSnapshot snapshot){
+      body: FutureBuilder<List<QnaModels>>(
+        future: fetchQnaAll(),
+        builder: (context, AsyncSnapshot<List<QnaModels>> snapshot){
             if (snapshot.data == null){
                 return const Center(child: CircularProgressIndicator());
             } else{
@@ -79,7 +80,7 @@ class _QnaPageState extends State<QnaPage> {
                                         ),
                                         const SizedBox(height: 5),
                                         Text(
-                                            "${snapshot.data![index].fields.customer} | ${snapshot.data![index].fields.date}",
+                                            "${snapshot.data![index].fields.date} | ${snapshot.data![index].fields.customer}",
                                             style: const TextStyle(
                                                 fontSize: 13.0,
                                                 color: Colors.grey,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_panel/app/qna/qna_fetch.dart';
 import 'package:my_panel/app/qna/qna_model.dart';
 import 'package:my_panel/app/qna/qna_reply_form.dart';
 import 'package:my_panel/app/qna/page/qna.dart';
@@ -6,6 +7,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
+import 'package:my_panel/app/qna/qna_form.dart';
 
 class ReplyPage extends StatefulWidget {
   const ReplyPage({Key? key, required this.qnaModel}) : super(key: key);
@@ -32,7 +34,7 @@ class _ReplyPageState extends State<ReplyPage> {
       //tombol reply di pojok kanan
       //https://api.flutter.dev/flutter/material/Card-class.html 
       body: FutureBuilder(
-        future: QnaModels.fetchQna(context.watch<CookieRequest>()),
+        future: fetchQna(context.watch<CookieRequest>()),
         builder: (context, AsyncSnapshot snapshot){
           if (snapshot.data == null){
             return const Center(child: CircularProgressIndicator());

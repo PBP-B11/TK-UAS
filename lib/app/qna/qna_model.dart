@@ -1,89 +1,146 @@
-import 'dart:convert';
-import 'package:http/http.dart' as http;
-import 'package:pbp_django_auth/pbp_django_auth.dart';
-import 'package:provider/provider.dart';
+// import 'dart:convert';
+// import 'package:http/http.dart' as http;
+// import 'package:pbp_django_auth/pbp_django_auth.dart';
+// import 'package:provider/provider.dart';
 
-List<QnaModels> QnaModelsFromJson(String str) => List<QnaModels>.from(json.decode(str).map((x) => QnaModels.fromJson(x)));
-String QnaModelsToJson(List<QnaModels> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+// QnaModels qnaModelsFromJson(String str) => QnaModels.fromJson(json.decode(str));
+
+// String qnaModelsToJson(QnaModels data) => json.encode(data.toJson());
+
+// class QnaModels {
+//     QnaModels({
+//         required this.data,
+//     });
+
+//     List<Datum> data;
+
+//     factory QnaModels.fromJson(Map<String, dynamic> json) => QnaModels(
+//         data: List<Datum>.from(json["data"].map((x) => Datum.fromJson(x))),
+//     );
+
+
+//     Map<String, dynamic> toJson() => {
+//         "data": List<dynamic>.from(data.map((x) => x.toJson())),
+//     };
+// }
+
+// class Datum {
+//     Datum({
+//         required this.pk,
+//         required this.fields,
+//     });
+
+//     int pk;
+//     Fields fields;
+
+//     factory Datum.fromJson(Map<String, dynamic> json) => Datum(
+//         pk: json["pk"],
+//         fields: Fields.fromJson(json["fields"]),
+//     );
+
+//     Map<String, dynamic> toJson() => {
+//         "pk": pk,
+//         "fields": fields.toJson(),
+//     };
+// }
+
+// class Fields {
+//     Fields({
+//         required this.customer,
+//         required this.isTechnician,
+//         required this.date,
+//         required this.description,
+//         required this.isReplied,
+//         required this.answer,
+//     });
+
+//     int customer;
+//     bool isTechnician;
+//     DateTime date;
+//     String description;
+//     bool isReplied;
+//     String answer;
+
+//     factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+//         customer: json["customer"],
+//         isTechnician: json["is_technician"],
+//         date: DateTime.parse(json["date"]),
+//         description: json["description"],
+//         isReplied: json["is_replied"],
+//         answer: json["answer"] == null ? null : json["answer"],
+//     );
+
+//     Map<String, dynamic> toJson() => {
+//         "customer": customer,
+//         "is_technician": isTechnician,
+//         "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+//         "description": description,
+//         "is_replied": isReplied,
+//         "answer": answer == null ? null : answer,
+//     };
+// }
+// To parse this JSON data, do
+//
+//     final qnaModels = qnaModelsFromJson(jsonString);
+
+import 'dart:convert';
+
+List<QnaModels> qnaModelsFromJson(String str) => List<QnaModels>.from(json.decode(str).map((x) => QnaModels.fromJson(x)));
+
+String qnaModelsToJson(List<QnaModels> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class QnaModels {
-  QnaModels({
-    required this.pk,
-    required this.fields,
-  });
+    QnaModels({
+        required this.pk,
+        required this.fields,
+    });
 
-  int pk;
-  Fields fields;
+    int pk;
+    Fields fields;
 
-  static List<QnaModels> listQna = [];
+    factory QnaModels.fromJson(Map<String, dynamic> json) => QnaModels(
+        pk: json["pk"],
+        fields: Fields.fromJson(json["fields"]),
+    );
 
-  factory QnaModels.fromJson(Map<String, dynamic> json) => QnaModels(
-    pk: json["pk"],
-    fields: Fields.fromJson(json["fields"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "pk": pk,
-    "fields": fields.toJson(),
-  };
-
-
- static Future<List<QnaModels>> fetchQna(CookieRequest request) async {
-    // var url =
-    //     Uri.parse('https://mypanel.up.railway.app/qna/show_question_json/');
-    // var response = await http.get(
-    //   url,
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    // );
-    var response = await request.get('https://mypanel.up.railway.app/qna/show_question_json');
-
-    // //print(jsonDecode(utf8.decode(response.bodyBytes)));
-    var data = jsonDecode(utf8.decode(response.bodyBytes));
-    print(data);
-
-    List<QnaModels> listQna = [];
-    List<dynamic> LisData = data["data"];
-    for (int i = 0; i < LisData.length; i++) {
-      var d = LisData[i];
-      if (d != null) {
-        listQna.add(QnaModels.fromJson(d));
-      }
-    }
-    return listQna;
-  }
+    Map<String, dynamic> toJson() => {
+        "pk": pk,
+        "fields": fields.toJson(),
+    };
 }
 
 class Fields {
-  Fields({
-    required this.customer,
-    required this.date,
-    required this.description,
-    required this.is_replied,
-    required this.answer
-  });
+    Fields({
+        required this.customer,
+        required this.isTechnician,
+        required this.date,
+        required this.description,
+        required this.isReplied,
+        required this.answer,
+    });
 
-  String customer;
-  DateTime date;
-  String description;
-  bool is_replied;
-  String answer;
+    int customer;
+    bool isTechnician;
+    DateTime date;
+    String description;
+    bool isReplied;
+    String answer;
 
-  factory Fields.fromJson(Map<String, dynamic> json) => Fields(
-    customer: json["customer"] == null ? null : json["customer"],
-    date: DateTime.parse(json["date"]),
-    description: json["description"],
-    is_replied: json["is_replied"],
-    answer: json["answer"],
-    
-  );
+    factory Fields.fromJson(Map<String, dynamic> json) => Fields(
+        customer: json["customer"],
+        isTechnician: json["is_technician"],
+        date: DateTime.parse(json["date"]),
+        description: json["description"],
+        isReplied: json["is_replied"],
+        answer: json["answer"] == null ? null : json["answer"],
+    );
 
-  Map<String, dynamic> toJson() => {
-    "customer": customer == null ? null : customer,
-    "description": description,
-    "date" : "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
-    "is_replied": is_replied,
-    "answer": answer,
-  };
+    Map<String, dynamic> toJson() => {
+        "customer": customer,
+        "is_technician": isTechnician,
+        "date": "${date.year.toString().padLeft(4, '0')}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}",
+        "description": description,
+        "is_replied": isReplied,
+        "answer": answer == null ? null : answer,
+    };
 }
