@@ -17,7 +17,7 @@ class _CustomAppBarState extends State<CustomAppBar>{
     return Container(
       padding: const EdgeInsets.all(8),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
         children: [
           IconButton(
             onPressed: () {
@@ -28,17 +28,13 @@ class _CustomAppBarState extends State<CustomAppBar>{
               size: 30,
             ),
           ),
-          Image.asset(
-            'lib/assets/images/logo.png',
-            width: MediaQuery.of(context).size.width / 3,
-          ),
-          IconButton(
-            onPressed: () {
-
-            },
-            icon: const Icon(
-              Icons.shopping_cart,
-              size: 25,
+          const Padding(
+            padding: EdgeInsets.only(left: 10.0),
+            child: Text("Keranjang",
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ],

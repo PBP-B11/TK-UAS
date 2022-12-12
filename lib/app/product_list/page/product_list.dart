@@ -31,9 +31,9 @@ class _ProductListPageState extends State<ProductListPage> {
         body: SingleChildScrollView(
           child: Column(
             children:  [
-              const Text("Panel",
+              const Text("All Product",
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -111,7 +111,24 @@ class _ProductListPageState extends State<ProductListPage> {
                                           fontSize: 14
                                       ),),
                                     onPressed: () async {
-                                      await addToCart(context, snapshot.data[index].pk);
+                                      await addToCart(
+                                        context,
+                                        snapshot.data[index].pk
+                                      );
+                                      final successBar = SnackBar(
+                                        content: Text("${snapshot.data[index].fields.name} berhasil ditambahkan keranjang belanja"),
+                                        action: SnackBarAction(
+                                          label: 'Lihat',
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => const CartPage()),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(successBar);
+
                                       // await request.post(
                                       //   'https://mypanel.up.railway.app/product/add_to_cart/${snapshot.data[index].pk}',
                                       //   //'http://10.0.2.2:8000/product/add_to_cart/${snapshot.data[index].pk}',
@@ -131,25 +148,28 @@ class _ProductListPageState extends State<ProductListPage> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: Container(
-          padding: EdgeInsets.all(10),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.blue,
+        floatingActionButton: Visibility(
+          visible: user.userLoggedIn?.isTechnician ?? false,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+              ),
+              child: const Text("Tambah Produk",
+                style: TextStyle(
+                    fontSize: 16
+                ),),
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProductFormPage()
+                  ),
+                );
+              },
             ),
-            child: Text("Tambah Produk",
-              style: const TextStyle(
-                  fontSize: 16
-              ),),
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ProductFormPage()
-                ),
-              );
-            },
           ),
         ),
       ),

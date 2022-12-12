@@ -28,3 +28,23 @@ Future<List<OrderItem>> fetchCart(BuildContext context) async {
 
   return listCart;
 }
+
+incrementItem(BuildContext context, int pk) async {
+  final request = context.read<CookieRequest>();
+  String url = 'https://mypanel.up.railway.app/cart/inc_dec_item/1/$pk/';
+  var response = await request.post(
+      url,
+      {}
+  );
+  print("increment item : " + response.toString());
+}
+
+decrementItem(BuildContext context, int pk) async {
+  final request = context.read<CookieRequest>();
+  String url = 'https://mypanel.up.railway.app/cart/inc_dec_item/2/$pk/';
+  var response = await request.post(
+      url,
+      {}
+  );
+  print("increment item : " + response.toString());
+}
