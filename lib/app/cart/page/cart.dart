@@ -1,6 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:my_panel/app/cart/api/cart_api.dart';
+import 'package:my_panel/app/cart/page/checkout.dart';
 
 import 'package:my_panel/util/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
@@ -55,7 +56,7 @@ class _CartPageState extends State<CartPage> {
     final response = request.get('https://mypanel.up.railway.app/cart/get_cart/');
     return SafeArea(
       child: Scaffold(
-        appBar: CustomAppBar(),
+        appBar: CustomAppBar(title: "Keranjang",),
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -279,7 +280,10 @@ class _CartPageState extends State<CartPage> {
                       ),
                     ),
                     onPressed: () {
-
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => const CheckoutPage()),
+                      );
                     },
                   ),
                 ],
