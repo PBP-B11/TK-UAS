@@ -8,8 +8,9 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:my_panel/app/profile/model/mainaddress.dart';
 import 'package:my_panel/app/authentication/models/customer.dart';
-
-
+import 'package:my_panel/app/authentication/pages/login_page.dart';
+import 'package:my_panel/util/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 class ProfilePage extends StatefulWidget {
   const ProfilePage({super.key});
@@ -22,6 +23,7 @@ class _ProfilePageState extends State<ProfilePage> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.watch<UserManagement>();
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -182,9 +184,8 @@ class _ProfilePageState extends State<ProfilePage> {
             ), 
             ),
             Row (     
-              mainAxisSize: MainAxisSize.min,        
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                SizedBox(width: 20),
                 SizedBox(
                   height: 40.0,
                   width: 120.0,  
@@ -205,7 +206,6 @@ class _ProfilePageState extends State<ProfilePage> {
                     ),
                   ),
                 ),
-                SizedBox(width: 30),
                 SizedBox(
                   height: 40.0,
                   width: 120.0,  
@@ -225,8 +225,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       style: TextStyle(color: Colors.white),
                     ),
                   ),
-                ),   
-                SizedBox(width: 30),
+                ),
                 SizedBox(
                   height: 40.0,
                   width: 120.0,  
@@ -248,8 +247,35 @@ class _ProfilePageState extends State<ProfilePage> {
                   ),
                 ),  
               ],
-            ),  
-       
+            ),
+          Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.redAccent,
+              ),
+              child: const Padding(
+                padding: EdgeInsets.only(top: 1, bottom: 1, left: 10, right: 10),
+                child: Padding(
+                  padding: EdgeInsets.all(4.0),
+                  child: Text("Logout",
+                    style: TextStyle(
+                        fontSize: 16
+                    ),
+                  ),
+                ),
+              ),
+              onPressed: () async {
+                user.removeUser();
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => const LoginPage())
+                );
+              },
+            ),
+          ),
         ],
       ),
       ),
