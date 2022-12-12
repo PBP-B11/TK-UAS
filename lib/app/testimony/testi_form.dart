@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:my_panel/app/testimony/page/testimony.dart';
 import 'dart:convert' as convert;
 
+
 class AddTesti extends StatefulWidget {
   const AddTesti({super.key});
   @override
@@ -26,7 +27,7 @@ class _AddState extends State<AddTesti> {
       appBar: AppBar(
         title: Text("Testimoni Form"),
       ),
-      drawer: MyDrawer(),
+      drawer: buildDrawer(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -124,7 +125,7 @@ class _AddState extends State<AddTesti> {
                                 );
                                 
                               
-                               var response = await http.post(Uri.parse('https://mypanel.up.railway.app/testimoni/create_ajax/'),
+                               var response = await http.post(Uri.parse('https://mypanel.up.railway.app/testimoni/create-ajax/'),
                                 body: data,headers: {"Content-Type": "application/json"});
 
                               print(response.statusCode);
@@ -133,7 +134,7 @@ class _AddState extends State<AddTesti> {
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 content: Text('Thank you for your response!')));
 
-                          Navigator.push( context,MaterialPageRoute(builder: (context) => TestimonyPage()), );
+                            Navigator.push(context, MaterialPageRoute( builder: (context) => TestimonyPage(),),);
                           },
 
                           child: const Text(
