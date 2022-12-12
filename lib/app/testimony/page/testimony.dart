@@ -6,7 +6,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class TestimonyPage extends StatefulWidget {
-  const TestimonyPage({super.key});
+  const TestimonyPage({Key? key}):super(key: key);
 
   @override
   State<TestimonyPage> createState() => _TestimonyPageState();
@@ -51,7 +51,7 @@ class _TestimonyPageState extends State<TestimonyPage> {
                                 borderRadius: BorderRadius.circular(15.0),
                                 boxShadow: const [
                                   BoxShadow(
-                                      color: Color.fromARGB(255, 69, 135, 233),
+                                      color: Color.fromARGB(255, 174, 197, 230),
                                       blurRadius: 2.0)
                                 ]),
                             child: Column(
@@ -63,14 +63,13 @@ class _TestimonyPageState extends State<TestimonyPage> {
                                   style: const TextStyle(
                                       fontSize: 18.0,
                                       fontWeight: FontWeight.bold,
-                                      backgroundColor:
-                                          Color.fromARGB(255, 58, 158, 220),
+                                      
                                       color:
-                                          Color.fromARGB(255, 255, 239, 239)),
+                                          Color.fromARGB(255, 60, 126, 226)),
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
-                                  "${snapshot.data![index].fields.username} | ${snapshot.data![index].fields.time}",
+                                  "${snapshot.data![index].fields.customer.name} | ${snapshot.data![index].fields.date}",
                                   style: const TextStyle(
                                     fontSize: 13.0,
                                     color: Colors.grey,
@@ -108,3 +107,4 @@ class _TestimonyPageState extends State<TestimonyPage> {
     );
   }
 }
+

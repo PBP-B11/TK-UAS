@@ -23,7 +23,6 @@ class _ReplyFormState extends State<ReplyForm> {
 
     Future<void> submit(BuildContext context, String idUser) async{
         String id = idUser;
-        int forum_pk = model.pk;
         final response = await http.post(
             //bisa ngga pass model forum lewat sini --> untuk foreignkey
             Uri.parse('https://mypanel.up.railway.app/qna/update_question/' + id),

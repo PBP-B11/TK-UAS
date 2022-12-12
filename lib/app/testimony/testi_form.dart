@@ -3,7 +3,9 @@ import 'package:my_panel/app/testimony/page/testimony.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/app/testimony/testi_model.dart';
 import 'package:http/http.dart' as http;
+import 'package:my_panel/app/testimony/page/testimony.dart';
 import 'dart:convert' as convert;
+
 
 class AddTesti extends StatefulWidget {
   const AddTesti({super.key});
@@ -25,7 +27,7 @@ class _AddState extends State<AddTesti> {
       appBar: AppBar(
         title: Text("Testimoni Form"),
       ),
-      drawer: MyDrawer(),
+      drawer: buildDrawer(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -123,7 +125,7 @@ class _AddState extends State<AddTesti> {
                                 );
                                 
                               
-                               var response = await http.post(Uri.parse('https://mypanel.up.railway.app/testimoni/create_ajax/'),
+                               var response = await http.post(Uri.parse('https://mypanel.up.railway.app/testimoni/create-ajax/'),
                                 body: data,headers: {"Content-Type": "application/json"});
 
                               print(response.statusCode);

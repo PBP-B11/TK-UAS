@@ -70,7 +70,7 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            title: const Text('Testimony'),
+            title: const Text('Testimoni'),
             onTap: () {
               // Route menu ke halaman myWatchlist
               Navigator.pushReplacement(
