@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/app/profile/page/function.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:my_panel/app/profile/model/mainaddress.dart';
-import 'package:my_panel/app/authentication/models/customer.dart';
+import 'package:my_panel/app/profile/page/profile.dart';
 
 class ContactForm extends StatefulWidget {
     const ContactForm({super.key});
@@ -22,7 +18,7 @@ class _ContactFormState extends State<ContactForm> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text('Form'),
+                title: Text('Contact Form'),
             ),
             body: Form(
               key: _formKey,
@@ -122,7 +118,10 @@ class _ContactFormState extends State<ContactForm> {
                                           SizedBox(height: 20),
                                           TextButton(
                                             onPressed: () {
-                                              Navigator.pop(context);
+                                              Navigator.pushReplacement(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => ProfilePage()),
+                                              );
                                             },
                                             child: Text('Kembali'),
                                           ), 
