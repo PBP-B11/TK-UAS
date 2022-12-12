@@ -4,7 +4,10 @@ import 'package:my_panel/util/drawer.dart';
 import 'package:my_panel/app/testimony/testi_model.dart';
 import 'package:http/http.dart' as http;
 import 'package:my_panel/app/testimony/page/testimony.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'dart:convert' as convert;
+
+import 'package:provider/provider.dart';
 
 
 class AddTesti extends StatefulWidget {
@@ -23,11 +26,11 @@ class _AddState extends State<AddTesti> {
   
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: Text("Testimoni Form"),
       ),
-      drawer: buildDrawer(context),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -115,26 +118,22 @@ class _AddState extends State<AddTesti> {
                           onPressed: () async{
                             
                             if (_formKey.currentState!.validate()) {
-                                print("debug");
-                                print(rate);
-                                print(description);
-                                var data = convert.jsonEncode(
-                                  <String, String>{
-                                    'title':rate,
-                                    'description': description,}
+                                _formKey.currentState!.reset();
+                                String url = 'https://mypanel.up.railway.app/testimoni/create-ajax/';
+                                // var response = await http.post(Uri.parse('https://mypanel.up.railway.app/testimoni/create-ajax/'),
+                                //  body: data,headers: {"Content-Type": "application/json"});
+                                var responce = await request.post(
+                                    url,
+                                    {
+                                      "title": rate,
+                                      "description": description,
+                                    }
                                 );
-                                
-                              
-                               var response = await http.post(Uri.parse('https://mypanel.up.railway.app/testimoni/create-ajax/'),
-                                body: data,headers: {"Content-Type": "application/json"});
-
-                              print(response.statusCode);
-          
+                                print(responce);
                             }
                             ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                                 content: Text('Thank you for your response!')));
-
-                            Navigator.push(context, MaterialPageRoute( builder: (context) => TestimonyPage(),),);
+                            Navigator.pop(context);
                           },
 
                           child: const Text(
