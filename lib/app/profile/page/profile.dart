@@ -29,7 +29,6 @@ class _ProfilePageState extends State<ProfilePage> {
       appBar: AppBar(
         title: Text('Profile'),
       ),
-      drawer: MyDrawer(),
       body: SingleChildScrollView(child:
        Column(
         children: [

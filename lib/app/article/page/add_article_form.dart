@@ -26,7 +26,6 @@ class _AddArticlePageState extends State<AddArticlePage> {
         title: Text('Add Article'),
       ),
       // Menambahkan drawer menu
-      drawer: MyDrawer(),
       body: Form(
         key: _formKey,
         child: Container(
