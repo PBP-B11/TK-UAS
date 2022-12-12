@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:my_panel/app/authentication/pages/login_page.dart';
 import 'package:my_panel/main.dart';
 import 'package:my_panel/util/providers/user_provider.dart';
 
@@ -236,8 +237,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                                   borderSide: BorderSide(
                                                       color: Colors.blue)),
                                           suffixIcon: Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 4, 0),
+                                            padding: const EdgeInsets.fromLTRB(0, 0, 4, 0),
                                             child: InkWell(
                                               onTap: togglePasswordView,
                                               child: Icon(
@@ -282,7 +282,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                     const Padding(
                                       padding: EdgeInsets.only(right: 10.0),
                                       child: Icon(
-                                        Icons.person,
+                                        Icons.key_outlined,
                                         size: 32,
                                         color: Colors.grey,
                                       ),
@@ -296,8 +296,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                             _technician = value;
                                           });
                                         },
-                                        contentPadding:
-                                            EdgeInsets.only(right: 0),
+                                        contentPadding: const EdgeInsets.only(right: 0),
                                       ),
                                     ),
                                   ],
@@ -325,29 +324,26 @@ class _RegisterPageState extends State<RegisterPage> {
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   onPressed: () async {
-                                    if (_registerFormKey.currentState!
-                                        .validate()) {
-                                      // 'username' and 'password' should be the values of the user login form.
+                                    if (_registerFormKey.currentState!.validate()) {
                                       final response = await request.post(
-                                          "https://mypanel.up.railway.app/auth/register/",
-                                          // "http://10.0.2.2:8000/auth/register/",
-                                          {
-                                            'username': _username,
-                                            'password1': _password1,
-                                            'password2': _password2,
-                                            'register_as': _technician
-                                                ? "Technician"
-                                                : "Customer",
-                                          });
-
-                                      print("Respons register : " +
-                                          response["status"].toString());
-
+                                        "https://mypanel.up.railway.app/auth/register/",
+                                        // "http://localhost:8000/auth/register/",
+                                        {
+                                          'username': _username,
+                                          'password1': _password1,
+                                          'password2': _password2,
+                                          'register_as': _technician
+                                            ? "Technician"
+                                            : "Customer",
+                                        });
                                       if (response["status"] == true) {
                                         // Code here will run if the login succeeded.
                                         _registerFormKey.currentState!.reset();
-
-                                        Navigator.pop(context);
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const LoginPage()),
+                                        );
                                       } else {
                                         // Code here will run if the login failed (wrong username/password).
                                         showDialog(
@@ -414,7 +410,7 @@ class _RegisterPageState extends State<RegisterPage> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   const Text(
-                                    "Already have an account?",
+                                    "Have join us before?",
                                     style: TextStyle(
                                       fontSize: 16,
                                       color: Colors.grey,
@@ -422,9 +418,13 @@ class _RegisterPageState extends State<RegisterPage> {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.pop(context);
+                                        Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) => const LoginPage()),
+                                        );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "Login",
                                         style: TextStyle(
                                           fontSize: 16,

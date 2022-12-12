@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:my_panel/app/product_list/models/product.dart';
 import 'package:my_panel/app/product_list/page/appbar.dart';
 import 'package:my_panel/app/product_list/page/product_form.dart';
-
+import 'package:my_panel/util/utils.dart';
 import 'package:my_panel/util/drawer.dart';
 import 'package:pbp_django_auth/pbp_django_auth.dart';
 import 'package:provider/provider.dart';
@@ -31,17 +31,15 @@ class _ProductListPageState extends State<ProductListPage> {
         body: SingleChildScrollView(
           child: Column(
             children:  [
-              const Text("Panel",
+              const Text("All Product",
                 style: TextStyle(
-                  fontSize: 28,
+                  fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               FutureBuilder(
                   future: fetchProduct(context),
                   builder: (context, AsyncSnapshot snapshot) {
-                    print("==== future builder call ====");
-                    print(snapshot.data);
                     if (snapshot.data == null) {
                       return const Center(child: CircularProgressIndicator());
                     } else {
@@ -92,7 +90,7 @@ class _ProductListPageState extends State<ProductListPage> {
                                             fontWeight: FontWeight.bold,
                                             fontSize: 18,
                                           ),),
-                                        Text("Rp${snapshot.data[index].fields.price}",
+                                        Text(convertToIdr(snapshot.data[index].fields.price, 0),
                                           style: const TextStyle(
                                             fontWeight: FontWeight.normal,
                                             fontSize: 15,
@@ -106,12 +104,29 @@ class _ProductListPageState extends State<ProductListPage> {
                                       foregroundColor: Colors.white,
                                       backgroundColor: Colors.blue,
                                     ),
-                                    child: Text("Tambah ke Keranjang ${snapshot.data[index].pk}",
-                                      style: const TextStyle(
+                                    child: const Text("Tambah ke Keranjang",
+                                      style: TextStyle(
                                           fontSize: 14
                                       ),),
                                     onPressed: () async {
-                                      await addToCart(context, snapshot.data[index].pk);
+                                      await addToCart(
+                                        context,
+                                        snapshot.data[index].pk
+                                      );
+                                      final successBar = SnackBar(
+                                        content: Text("${snapshot.data[index].fields.name} berhasil ditambahkan keranjang belanja"),
+                                        action: SnackBarAction(
+                                          label: 'Lihat',
+                                          onPressed: () {
+                                            Navigator.push(
+                                              context,
+                                              MaterialPageRoute(builder: (context) => const CartPage()),
+                                            );
+                                          },
+                                        ),
+                                      );
+                                      ScaffoldMessenger.of(context).showSnackBar(successBar);
+
                                       // await request.post(
                                       //   'https://mypanel.up.railway.app/product/add_to_cart/${snapshot.data[index].pk}',
                                       //   //'http://10.0.2.2:8000/product/add_to_cart/${snapshot.data[index].pk}',
@@ -131,25 +146,28 @@ class _ProductListPageState extends State<ProductListPage> {
           ),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: Container(
-          padding: EdgeInsets.all(10),
-          child: TextButton(
-            style: TextButton.styleFrom(
-              foregroundColor: Colors.white,
-              backgroundColor: Colors.blue,
+        floatingActionButton: Visibility(
+          visible: user.userLoggedIn?.isTechnician ?? false,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: TextButton(
+              style: TextButton.styleFrom(
+                foregroundColor: Colors.white,
+                backgroundColor: Colors.blue,
+              ),
+              child: const Text("Tambah Produk",
+                style: TextStyle(
+                    fontSize: 16
+                ),),
+              onPressed: () async {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProductFormPage()
+                  ),
+                );
+              },
             ),
-            child: Text("Tambah Produk",
-              style: const TextStyle(
-                  fontSize: 16
-              ),),
-            onPressed: () async {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const ProductFormPage()
-                ),
-              );
-            },
           ),
         ),
       ),

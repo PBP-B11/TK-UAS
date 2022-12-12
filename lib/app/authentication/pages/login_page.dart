@@ -221,16 +221,15 @@ class _LoginPageState extends State<LoginPage> {
                                     style: TextStyle(fontSize: 18),
                                   ),
                                   onPressed: () async {
-                                    if (_loginFormKey.currentState!
-                                        .validate()) {
+                                    if (_loginFormKey.currentState!.validate()) {
                                       // 'username' and 'password' should be the values of the user login form.
                                       final response = await request.login(
-                                          "https://mypanel.up.railway.app/auth/login/",
-                                          // "http://10.0.2.2:8000/auth/login/",
-                                          {
-                                            'username': _username,
-                                            'password': _password1,
-                                          });
+                                        "https://mypanel.up.railway.app/auth/login/",
+                                        //"http://10.0.2.2:8000/auth/login/",
+                                        {
+                                          'username': _username,
+                                          'password': _password1,
+                                        });
                                       if (request.loggedIn) {
                                         // Code here will run if the login succeeded.
                                         _loginFormKey.currentState!.reset();
@@ -264,11 +263,10 @@ class _LoginPageState extends State<LoginPage> {
                                                     Center(
                                                       child: Column(children: [
                                                         Text(
-                                                            response["message"],
-                                                            textAlign: TextAlign
-                                                                .center,
-                                                            style: TextStyle(
-                                                                fontSize: 16)),
+                                                          response["message"],
+                                                          textAlign: TextAlign.center,
+                                                          style: TextStyle(
+                                                            fontSize: 16)),
                                                       ]),
                                                     ),
                                                     SizedBox(height: 20),
@@ -294,7 +292,7 @@ class _LoginPageState extends State<LoginPage> {
                                 ),
                               ),
 
-                              Padding(
+                              const Padding(
                                 padding:
                                     const EdgeInsets.only(top: 10, bottom: 10),
                                 child: const Text(
@@ -317,14 +315,13 @@ class _LoginPageState extends State<LoginPage> {
                                   ),
                                   TextButton(
                                       onPressed: () {
-                                        Navigator.push(
+                                        Navigator.pushReplacement(
                                           context,
                                           MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const RegisterPage()),
+                                              builder: (context) => const RegisterPage()),
                                         );
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         "Register",
                                         style: TextStyle(
                                           fontSize: 16,
