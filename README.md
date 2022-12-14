@@ -5,6 +5,8 @@ Pemrograman Berbasis Platform (CSGE602022) - diselenggarakan oleh Fakultas Ilmu 
 
 Heroku app url : [![Build status](https://build.appcenter.ms/v0.1/apps/92c8ece8-2fc3-4565-9b72-a99745390083/branches/main/badge)](https://appcenter.ms)
 
+Heroku app deployment : [Download MyPanel](https://install.appcenter.ms/orgs/pbp-b11/apps/mypanel/distribution_groups/pbpasik123)
+
 created by : Kelompok PBP - B11
 
               - Dina Dwi Kinanty (2106651650)
